@@ -2,12 +2,13 @@ import { io } from "socket.io-client";
 let socket: any = null;
 
 export default defineNuxtPlugin(() => {
+    const config = useRuntimeConfig()
 
     return {
         provide: {
             StartSocket: () => {
                 if (socket) return;
-                socket = io(`ws://${window.location.host.split(":")[0]}:3500`);
+                socket = io(`ws://${window.location.host.split(":")[0]}:${config.public.SocketPORT}`);
 
                 socket.on("connect", () => {
                     console.log(`websocket connection established`);

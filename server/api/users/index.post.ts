@@ -2,7 +2,7 @@ const UserSessions = new Map();
 const config = useRuntimeConfig()
 import io from 'socket.io-client';
 import webPush from 'web-push';
-const socket = io('http://localhost:3500');
+const socket = io(`http://localhost:${config.public.SocketPORT}`);
 
 export default defineEventHandler(async (event) => {
 
@@ -39,7 +39,7 @@ export default defineEventHandler(async (event) => {
                     UserSessions.delete(Session);
                     socket.emit('SessionExpires', Session)
                 }
-            }, 120 * 60 * 1000); 
+            }, 10 * 1000)//120 * 60 * 1000); 
         }
     } 
 

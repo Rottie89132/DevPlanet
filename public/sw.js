@@ -1,7 +1,5 @@
 import { clientsClaim } from "workbox-core";
 import { precacheAndRoute, cleanupOutdatedCaches } from "workbox-precaching";
-import { registerRoute, NavigationRoute, } from "workbox-routing";
-
 
 self.skipWaiting();
 clientsClaim();

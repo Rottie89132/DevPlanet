@@ -26,7 +26,8 @@ export default defineNuxtConfig({
     clientToken: process.env.token,
     PrivateWorkerKey: process.env.VapidPrivate,
     public: {
-      WorkerKey: process.env.VapidPublic
+      WorkerKey: process.env.VapidPublic,
+      SocketPORT: process.env.SocketPORT
     }
   },
   
