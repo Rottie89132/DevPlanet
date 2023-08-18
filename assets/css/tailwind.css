@@ -1,0 +1,64 @@
+@import url("https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+body {
+    overflow-x: hidden;
+    @apply dark:bg-[#101010] bg-[#F8F8F8];
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+    @apply dark:darky lighty dark:border-neutral-800 border-gray-300 border-2 
+}
+
+@layer components {
+    .font-kufi {
+        font-family: "Reem Kufi", sans-serif;
+    }
+
+    .btn-Input {
+        border-radius: 0.8em;
+        @apply p-3 px-3 dark:text-white text-black font-normal bg-white dark:bg-[#1D1D1D] border-white border-2 dark:border-[#1D1D1D] appearance-none;
+    }
+
+    .btn-Input:focus {
+        @apply ring-2 dark:ring-neutral-800 ring-gray-300 outline-none
+    }
+
+    .btn-login {
+        border-radius: 0.8em;
+        @apply p-3 px-3 font-semibold text-white bg-rose-500 dark:bg-rose-800;
+    }
+
+    .btn-login:hover {
+        @apply bg-rose-600 dark:bg-rose-900
+    }
+
+}
+
+@layer utilities {
+    .darky {
+        -webkit-box-shadow: 0 0 0 30px #1D1D1D inset !important;
+        -webkit-text-fill-color: #ffffff !important;
+        box-shadow: 0 0 0 30px #1D1D1D inset !important;
+        background-clip: content-box !important;
+    }
+
+    .lighty {
+        -webkit-box-shadow: 0 0 0 30px #ffffff inset !important; 
+        -webkit-text-fill-color: #1D1D1D !important;
+        box-shadow: 0 0 0 30px #ffffff inset !important;
+        background-clip: content-box !important;
+    }
+}
+
+
+
