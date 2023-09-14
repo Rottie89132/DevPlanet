@@ -1,5 +1,5 @@
 <template>
-    <button class="flex items-center justify-between p-3 mt-2 rounded-lg dark:bg-[#141414] bg-[#EBEBEB] me-2" @click="subscribe">
+    <button aria-label="Subscribe" class="flex items-center justify-between p-3 mt-2 rounded-lg dark:bg-[#141414] bg-[#EBEBEB] me-2" @click="subscribe">
         <Icon class=" dark:text-white text-black opacity-40" :name="userSubscribed ? 'mdi:bell' : 'mdi:bell-alert'" size="1.25em"/>
     </button>
 </template>

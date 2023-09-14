@@ -11,16 +11,16 @@ const { SocketPORT, PORT } = process.env
 for (const key in interfaces) {
   for (const iface of interfaces[key]) {
     if (iface.family === 'IPv4' && !iface.internal) {
-      addresses.push(`http://${iface.address}:${PORT}`);
+      addresses.push(`http://${iface.address}:${PORT || 3000}`);
     }
   }
 }
 
 export default defineNitroPlugin( async() => {
   
-  const io = new Server(SocketPORT, {
+  const io = new Server(SocketPORT || 3500, {
     cors: { 
-      origin: [`http://localhost:${PORT}`, ...addresses],
+      origin: [`http://localhost:${PORT || 3000}`, ...addresses],
       credentials: true
     }
 });
@@ -56,13 +56,13 @@ export default defineNitroPlugin( async() => {
 
       const pushSubscription = await Subscription.find()
 
-      pushSubscription.forEach(subscription => {
+        pushSubscription.forEach(subscription => {
           webPush.sendNotification(subscription, JSON.stringify({
             title: `${event.author.userName} ${event.content.title}`,
             body: `${event.guild.guildName}`,
             data: `/${event.metadata.metaId}`
           }))
-      })
+        })
     })
 
     socket.on('guild', async (event) => {
@@ -71,6 +71,10 @@ export default defineNitroPlugin( async() => {
 
     socket.on('SessionExpires', async (event) => {
       socket.broadcast.emit(event, event )
+    })
+
+    socket.on('AsyncRefresh', async (event) => {
+      socket.broadcast.emit('AsyncRefresh', event)
     })
 
     socket.on('join-room', (RoomID) => { 

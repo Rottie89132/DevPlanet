@@ -10,7 +10,8 @@
 
 body {
     overflow-x: hidden;
-    @apply dark:bg-[#101010] bg-[#F8F8F8];
+    @apply dark:bg-[#101010] bg-[#F8F8F8]; 
+    
 }
 
 input:-webkit-autofill,
@@ -58,6 +59,8 @@ input:-webkit-autofill:focus {
         box-shadow: 0 0 0 30px #ffffff inset !important;
         background-clip: content-box !important;
     }
+
+
 }
 
 

@@ -1,6 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: { enabled: false },
   modules: [ 
     '@vue-macros/nuxt',
     '@nuxt/image',
@@ -8,12 +7,21 @@ export default defineNuxtConfig({
     'nuxt-icon',
     'nuxt-mongoose',
     '@nuxtjs/tailwindcss',
-    '@vueuse/motion/nuxt',
     '@nuxtjs/color-mode',
     '@vite-pwa/nuxt',
-    '@nuxtjs/device'
-    
+    '@nuxtjs/device',
+    'nuxt-scheduler', 
+    //'@nuxtjs/robots',
+    '@pinia/nuxt',
+    '@nuxt/devtools'
   ],
+  devtools: {
+    enabled: true,
+
+    timeline: {
+      enabled: true
+    },
+  },
   tailwindcss: {
     configPath: "tailwind.config.js",
   },
@@ -30,7 +38,12 @@ export default defineNuxtConfig({
       SocketPORT: process.env.SocketPORT
     }
   },
-  
+  pinia: {
+    autoImports: [
+      'defineStore', 
+      ['defineStore', 'definePiniaStore'], 
+    ],
+  },
   nitro: {
     compressPublicAssets: true,
   }, 
@@ -72,7 +85,7 @@ export default defineNuxtConfig({
   app: {
     head: {
       link: [
-        { rel: 'icon', type: 'image/png', href: 'image/rock.png' },
+        { rel: 'icon', type: 'image/png', href: 'image/rock.png' }
       ],
       charset: 'utf-8',
       viewport: 'width=device-width, initial-scale=1',

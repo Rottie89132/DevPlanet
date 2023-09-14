@@ -31,8 +31,7 @@ async function onrefresh() {
                 alert("Session Expired: Your session has timed out due to inactivity.");
                 navigateTo("/login")
             }
-            //if(res.status != 503) { feedArray.value = res.audit.length } 
-        }, 2000);
+        }, 1200);
     }
 
 </script>

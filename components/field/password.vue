@@ -22,7 +22,8 @@ const probs = defineProps({
 
 .error {
     color: #B92538;
-    @apply ring-2 ring-[#B92538] outline-none
+    @apply ring-2 ring-[#B92538] outline-none 
 }
+
 
 </style>

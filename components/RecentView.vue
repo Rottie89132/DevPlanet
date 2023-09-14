@@ -23,7 +23,7 @@
             </div>
             <div class="">
                 <h1 class="text-[0.6rem] font-bold dark:text-white text-black truncate" :class="index === 0 ? 'text-rose-100 ' : ''">{{ item.author.userName.charAt(0).toUpperCase() + item.author.userName.slice(1) }}</h1>
-                <h1 class="text-[0.5rem] dark:text-white text-black opacity-80" :class="index === 0 ? 'text-rose-100 ' : ''">{{ item.content.title }}</h1>
+                <h1 class="text-[0.5rem] dark:text-white text-black opacity-80" :class="index === 0 ? 'text-rose-100 ' : ''">{{ item.content.title.slice(0, 29) }}{{ item.content.title.length > 29 ? ".." : "" }}</h1>
             </div>
             <div>
                 <p class="text-[0.6rem] font-bold dark:text-white text-black " :class="index === 0 ? 'text-rose-100 ' : ''"> {{ item.guild.guildName }}</p>

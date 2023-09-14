@@ -39,7 +39,7 @@ export default defineEventHandler(async (event) => {
                     UserSessions.delete(Session);
                     socket.emit('SessionExpires', Session)
                 }
-            }, 10 * 1000)//120 * 60 * 1000); 
+            }, 120* 60 * 1000) 
         }
     } 
 

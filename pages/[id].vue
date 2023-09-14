@@ -2,7 +2,7 @@
     <VitePwaManifest/>
     <div class=" mx-4">
         <div class="flex items-center justify-start my-2 gap-4">
-            <button @click="navigateTo('/')" class="bg-rose-600 hover:bg-rose-700 dark:bg-rose-800 dark:hover:bg-rose-900 rounded-lg p-3 mt-2 flex items-center justify-between "
+            <button @click="$router.back()"  class="bg-rose-600 hover:bg-rose-700 dark:bg-rose-800 dark:hover:bg-rose-900 rounded-lg p-3 mt-2 flex items-center justify-between "
                 aria-label="returnToHome">
                 <icon name="material-symbols:keyboard-return" size="1.25em" class="text-white" />
             </button>
@@ -42,24 +42,32 @@
 </template>
 
 <script setup>
+import { useVisitedPagesStore } from '~/stores/visitedPage';
+const visitedPagesStore = useVisitedPagesStore();
+const pageName = useRoute().fullPath.replace("/", ""); // Vervang dit met je eigen logica om de paginanaam te verkrijgen
 
 useHead({
     title: `Planetaire - ${useRoute().params.id}`,
     meta: [{ name: "description", content: "My amazing site." }],
 });
 
-definePageMeta({
-    middleware: ["session"],
-});
-
 onMounted(() => {
     $StartSocket()
+    $ClearSession()
+
+    if (!visitedPagesStore.hasVisitedPage(pageName)) {
+        visitedPagesStore.addVisitedPage(pageName);
+    } 
+});
+
+definePageMeta({
+    middleware: ["session"],
 });
 
 const feed = ref([])
 const activity = ref()
 
-const { $StartSocket } = useNuxtApp();
+const { $StartSocket, $ClearSession } = useNuxtApp();
 const { data: response } = await useFetch(`/api/feeds/${useRoute().params.id}`);
 
 if(response.value.status == 200){

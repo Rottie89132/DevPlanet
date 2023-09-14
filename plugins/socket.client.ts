@@ -1,5 +1,6 @@
 import { io } from "socket.io-client";
 let socket: any = null;
+let Countstate: Boolean = false;
 
 export default defineNuxtPlugin(() => {
     const config = useRuntimeConfig()
@@ -8,14 +9,16 @@ export default defineNuxtPlugin(() => {
         provide: {
             StartSocket: () => {
                 if (socket) return;
-                socket = io(`ws://${window.location.host.split(":")[0]}:${config.public.SocketPORT}`);
+                socket = io(`ws://${window.location.host.split(":")[0]}:${config.public.SocketPORT || 3500}`);
 
                 socket.on("connect", () => {
                     console.log(`websocket connection established`);
+                    Countstate = true;
                 });
 
                 socket.on("disconnect", () => {
                     console.log("websocket connection closed");
+                    Countstate = false;
                 });
             },
             CloseSocket: () => {
@@ -24,7 +27,33 @@ export default defineNuxtPlugin(() => {
                     socket = null;
                 }
             },
-            OnSocketEvent: ( feed: any, ReviewCount: any, ServerCount: any, response: any, server: any ) => {
+            ClearSession: (response: any, server: any ) => {
+                socket.on(useCookie("token").value, async (event: any) => {
+
+                    if(Countstate) console.log("Websocket event received! ");
+
+                    useCookie("token").value = null;
+                    try {
+                        response.value = { status: 401 };
+                        server.value = { status: 401 };
+                    } catch {}
+
+                    if (socket) {
+                        socket.close();
+                        socket = null;
+                    }
+                    
+                    setTimeout(() => {
+                        if (!Countstate) {
+                            Countstate = true;
+                            alert("Session Expired: Your session has timed out due to inactivity.");
+                            navigateTo("/login")
+                        }
+                    }, 1000);
+
+                });
+            },
+            EventSession: ( feed: any, ReviewCount: any, ServerCount: any, response: any, server: any ) => {
                 socket.on(`event`, async (event: any) => {
                     const { data: review }: any = await useFetch("/api/feeds/reviews");
                     const { data: server }: any = await useFetch("/api/feeds/server");
@@ -38,25 +67,22 @@ export default defineNuxtPlugin(() => {
                         feed.value.splice(0, 0, event);
                     }, 1500);
                 });
-
-                socket.on(useCookie("token").value, async (event: any) => {
-                    console.log("Websocket event received! ");
-
-                    useCookie("token").value = null;
-                    response.value = { status: 401 };
-                    server.value = { status: 401 };
-
-                    if (socket) {
-                        socket.close();
-                        socket = null;
-                    }
-
-                    setTimeout(() => {
-                        //alert("Session Expired: Your session has timed out due to inactivity.");
-                        navigateTo("/login");
-                    }, 1000);
-                });
             },
-        },
-    };
-});
+            ServerSession: (feed: any, ReviewCount: any, ServerCount: any, response: any) => {
+                socket.on('AsyncRefresh', async (event: any) => {
+                    const { data: review }: any = await useFetch("/api/feeds/reviews");
+                    const { data: server }: any = await useFetch("/api/feeds/server");
+
+                    setTimeout(async () => {
+                        console.log("Websocket event received! ");
+
+                        ReviewCount.value = review.value.count;
+                        ServerCount.value = server.value.count;
+                        response.value = { status: server.value.status };
+                        feed.value.splice(0, 0, []);
+                    }, 250);
+                })
+            }
+        }
+    }
+})

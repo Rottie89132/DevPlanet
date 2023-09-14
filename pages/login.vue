@@ -4,8 +4,7 @@
         <div class=" flex justify-center rounded-xl py-10 p-5 h-[100%] dark:bg-[#141414] bg-[#ececec]">
             <div>
                 <div class="flex justify-center w-full">
-                    <div
-                        class=" w-[80%] bg-[#FFFFFF] dark:bg-[#131111] rounded-full border-[0.5em] border-[#F4F4F4] dark:border-[#1F1F1F] p-5">
+                    <div class=" mt-8 w-[80%] bg-[#FFFFFF] dark:bg-[#131111] rounded-full border-[0.5em] border-[#F4F4F4] dark:border-[#1F1F1F] p-5">
                         <NuxtImg src="/image/Frame.svg" draggable="false" alt="rocket" />
                     </div>
                 </div>
@@ -14,7 +13,7 @@
                 <div>
                     <FieldForm  :Error="Message" @submit="handleLogin" :validation-schema="schema">
                         <FieldMail :Error="Message" />
-                        <FieldPassword :Error="Message" />
+                        <FieldPassword :Error="Message"/>
                         <FieldSubmit type="submit" :loading="isloading" />
                     </FieldForm>
                 </div>
@@ -26,6 +25,7 @@
 <script setup>
 import { configure } from 'vee-validate';
 import * as yup from 'yup';
+
 useColorMode()
 
 definePageMeta({
@@ -52,7 +52,7 @@ const schema = yup.object().shape({
 
 });
 
-async function handleLogin(values, actions) {
+const handleLogin = async (values, actions) => {
 
     isloading.value = true
     const { data: response } = await useFetch("/api/auth", { method: "POST", body: values })
