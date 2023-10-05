@@ -1,4 +1,3 @@
-import { set } from "nuxt/dist/app/compat/capi"
 
 export default defineEventHandler(async (event) => {
 
@@ -7,6 +6,8 @@ export default defineEventHandler(async (event) => {
         
         const { subscription, platform } = await readBody(event)
         const { endpoint, keys } = subscription
+
+        console.log(subscription)
 
         const updateQuery = await Subscription.findOneAndUpdate({ UserID: authorized.response.ID }, 
             { $set: { endpoint: endpoint, keys: keys, Platform: platform } }

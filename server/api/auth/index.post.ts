@@ -1,3 +1,4 @@
+
 const UserData = new Map();
 
 import bcrypt from "bcrypt"
@@ -9,7 +10,7 @@ export default defineEventHandler(async (event)=> {
     const { email, password } = await readBody(event)
     if(!password) return false
 
-    const user = await User.findOne({ Email: email })
+    const user: any = await User.findOne({ Email: email })
     if (user == null) return false
 
     user.ComparePasswords = async function (EnteredPassword: string) {

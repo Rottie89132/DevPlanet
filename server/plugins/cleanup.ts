@@ -7,7 +7,7 @@ export default defineNitroPlugin(() => {
     const scheduler = useScheduler();
 
     scheduler.run(async () => {
-        await Audit.deleteMany({})
+        //await Audit.deleteMany({})
         socket.emit('AsyncRefresh', [{}])
     }).cron(`0 0 * * 0,2`)
 

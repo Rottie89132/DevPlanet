@@ -1,7 +1,7 @@
 <template>
     <VitePwaManifest/>
     <div class=" absolute w-[100%] h-[100%] p-5 ">
-        <div class=" flex justify-center rounded-xl py-10 p-5 h-[100%] dark:bg-[#141414] bg-[#ececec]">
+        <div class=" flex justify-center  rounded-xl py-10 p-5 h-[100%] dark:bg-[#141414] bg-[#ececec]">
             <div>
                 <div class="flex justify-center w-full">
                     <div class=" mt-8 w-[80%] bg-[#FFFFFF] dark:bg-[#131111] rounded-full border-[0.5em] border-[#F4F4F4] dark:border-[#1F1F1F] p-5">
@@ -11,7 +11,7 @@
                 <h1 class="my-5 text-5xl text-center text-[#676767] dark:text-[#BABABA] font-kufi">Planetaire</h1>
                 <hr class=" my-10 h-2 bg-[#F4F4F4] dark:bg-[#1D1D1D] rounded-full border-none">
                 <div>
-                    <FieldForm  :Error="Message" @submit="handleLogin" :validation-schema="schema">
+                    <FieldForm :Error="Message" @submit="handleLogin" :validation-schema="schema">
                         <FieldMail :Error="Message" />
                         <FieldPassword :Error="Message"/>
                         <FieldSubmit type="submit" :loading="isloading" />
@@ -23,6 +23,7 @@
 </template>
 
 <script setup>
+
 import { configure } from 'vee-validate';
 import * as yup from 'yup';
 
@@ -34,7 +35,7 @@ definePageMeta({
 
 useHead({
     title: 'Planetaire - Login',
-    meta: [{ name: 'description', content: 'Please login' }]
+    meta: [{ name: 'description', content: 'Please login' }],
 })
 
 const isloading = ref(false)
@@ -77,3 +78,4 @@ configure({
 });
 
 </script>
+

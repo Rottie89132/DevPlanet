@@ -24,7 +24,7 @@ export default defineEventHandler(async (event) => {
                         config.PrivateWorkerKey
                     );
 
-                    const pushSubscription = await Subscription.findOne({ UserID: UserSessions.get(Session).ID })
+                    const pushSubscription: any = await Subscription.findOne({ UserID: UserSessions.get(Session).ID })
                     
                     if(pushSubscription) {
                         const platform = pushSubscription.Platform

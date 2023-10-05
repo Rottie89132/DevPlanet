@@ -2,14 +2,14 @@
     <div id="navbar" class=" z-10 fixed w-1 h-full top-0">
         <Transition name="navbar">
             <div v-if="NavShow">
-                <button @click="ShowNavbar" :disabled="busy" ref="navbar" class=" cursor-default absolute bg-black bg-opacity-60 w-screen h-full"></button>
+                <button @click="ShowNavbar" :disabled="busy" ref="navbar" class=" backdrop-blur-sm cursor-default absolute bg-black bg-opacity-60 w-screen h-full"></button>
                 <Transition name="topics">
                     <div v-if="TopShow" ref="topics" class=" fixed border-r-2 dark:border-[#111111] border-[#efefef] dark:bg-[#090909] bg-[#f6f6f6] dark:text-[#ccc] text-[#262525] border-opacity-40 justify-center p-4  h-full">
                         <hr class=" mt-10 mb-5 border dark:border-[#100F0F] border-[#dadada]">
                         <NuxtLink to="/" class="dark:hover:text-white hover:text-[#0a0a0a] bg-[#dadada] hover:bg-[#d0d0d0] dark:bg-[#100F0F] dark:hover:bg-[#1e1c1c] transition-all delay-100 mb-5 flex justify-center p-2 items-center rounded-lg">
                             <icon size="1.6rem" name="ic:baseline-home"></icon>
                         </NuxtLink>
-                        <NuxtLink to="/servers" class="dark:hover:text-white hover:text-[#0a0a0a] bg-[#dadada] hover:bg-[#d0d0d0] dark:bg-[#100F0F] dark:hover:bg-[#1e1c1c] transition-all delay-100 mb-5 flex justify-center p-2 items-center rounded-lg">
+                        <NuxtLink :to="redirectServer" class="dark:hover:text-white hover:text-[#0a0a0a] bg-[#dadada] hover:bg-[#d0d0d0] dark:bg-[#100F0F] dark:hover:bg-[#1e1c1c] transition-all delay-100 mb-5 flex justify-center p-2 items-center rounded-lg">
                             <icon size="1.6rem" name="ic:baseline-apartment"></icon>
                         </NuxtLink>
                         <NuxtLink :to="redirect" class="dark:hover:text-white hover:text-[#0a0a0a] bg-[#dadada] hover:bg-[#d0d0d0] dark:bg-[#100F0F] dark:hover:bg-[#1e1c1c] transition-all delay-100 mb-5 flex justify-center p-2 items-center rounded-lg">
@@ -36,9 +36,11 @@
 
 <script setup>
 
+const redirectServer = ref('/servers')
 const redirect = ref('/audits')
 const NavShow = ref(false)
 const TopShow = ref(false)
+const savedServer = ref()
 const savedpage = ref()
 const navbar = ref()
 const topics = ref()
@@ -49,6 +51,9 @@ const ShowNavbar = () => {
 
     savedpage.value = Number(useLocalStorage("page").value) || 1;
     redirect.value = `/audits?page=${Number(savedpage.value)}`
+
+    savedServer.value = useLocalStorage("ServerChannel").value;
+    redirectServer.value = `/servers?index=${Number(savedServer.value)}`
 
     if (NavShow.value == true) {
         TopShow.value = TopShow.value ? false : true;

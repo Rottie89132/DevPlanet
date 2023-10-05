@@ -64,7 +64,7 @@ export default defineNuxtPlugin(() => {
                         ReviewCount.value = review.value.count;
                         ServerCount.value = server.value.count;
                         response.value = { status: server.value.status };
-                        feed.value.splice(0, 0, event);
+                        feed.value?.splice(0, 0, event);
                     }, 1500);
                 });
             },

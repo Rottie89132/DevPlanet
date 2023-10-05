@@ -1,4 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+// import path from 'path'
+// import fs from 'fs'
+
 export default defineNuxtConfig({
   modules: [ 
     '@vue-macros/nuxt',
@@ -11,12 +14,16 @@ export default defineNuxtConfig({
     '@vite-pwa/nuxt',
     '@nuxtjs/device',
     'nuxt-scheduler', 
-    //'@nuxtjs/robots',
     '@pinia/nuxt',
-    '@nuxt/devtools'
-  ],
+    '@nuxt/devtools',
+    '@formkit/auto-animate/nuxt',
+    '@element-plus/nuxt'
+  ], 
+  elementPlus: { 
+    themes: ['dark'],
+  },
   devtools: {
-    enabled: true,
+    enabled: false,
 
     timeline: {
       enabled: true
@@ -56,6 +63,10 @@ export default defineNuxtConfig({
       name: "DevPlanet",
       short_name: "DevPlanet",
       description: "Welcome to this website",
+      orientation: "portrait-primary",
+      background_color: "#101010",
+      theme_color: "#101010",
+      display_override: ["window-controls-overlay", "standalone", "minimal-ui", "fullscreen", "browser"],
       icons: [
         {
           src: "icons/icon_144.png",
@@ -81,9 +92,12 @@ export default defineNuxtConfig({
       enabled: true,
       type: "module"
     },
-  },
+  }, 
   app: {
     head: {
+      meta: [
+        { name: 'theme-color', media: '(prefers-color-scheme: light)', content: "#F8F8F8" }
+      ],
       link: [
         { rel: 'icon', type: 'image/png', href: 'image/rock.png' }
       ],

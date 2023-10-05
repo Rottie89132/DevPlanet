@@ -26,8 +26,9 @@ export default defineNitroPlugin( async() => {
 });
   console.log("\x1b[32m✔\x1b[0m websocket connection established")
   console.log()
+  console.log('\x1b[32m  ➜ Websocket: \x1b[0m \x1b[36m http://localhost:' + PORT + '/\x1b[0m');
   addresses.forEach((address) => {
-    console.log('  \x1b[37m  > Websocket: \x1b[0m  \x1b[36m' + address + '\x1b[0m');
+    console.log('\x1b[35m  ➜ Websocket: \x1b[0m  \x1b[36m' + address + '/\x1b[0m');
   });
   console.log()
 
@@ -55,7 +56,7 @@ export default defineNitroPlugin( async() => {
       );
 
       const pushSubscription = await Subscription.find()
-
+      if(pushSubscription.length > 0) {
         pushSubscription.forEach(subscription => {
           webPush.sendNotification(subscription, JSON.stringify({
             title: `${event.author.userName} ${event.content.title}`,
@@ -63,6 +64,7 @@ export default defineNitroPlugin( async() => {
             data: `/${event.metadata.metaId}`
           }))
         })
+      }
     })
 
     socket.on('guild', async (event) => {

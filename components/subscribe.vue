@@ -1,6 +1,6 @@
 <template>
     <button aria-label="Subscribe" class="flex items-center justify-between p-3 mt-2 rounded-lg dark:bg-[#141414] bg-[#EBEBEB] me-2" @click="subscribe">
-        <Icon class=" dark:text-white text-black opacity-40" :name="userSubscribed ? 'mdi:bell' : 'mdi:bell-alert'" size="1.25em"/>
+        <Icon class="text-black dark:text-white opacity-40" :name="userSubscribed ? 'mdi:bell' : 'mdi:bell-alert'" size="1.25em"/>
     </button>
 </template>
 
@@ -13,7 +13,7 @@ onMounted(async () =>{
 
     const SetRegistration = await navigator.serviceWorker.ready
     const getSubscription = await SetRegistration.pushManager.getSubscription()
-    
+
     const Storage = useLocalStorage("userSubscribed").value = getSubscription ? true : false
     userSubscribed.value = Storage
 })

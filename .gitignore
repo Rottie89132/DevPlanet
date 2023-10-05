@@ -23,3 +23,6 @@ logs
 .env.*
 !.env.example
 pages/tests
+server.crt
+server.csr
+server.key

@@ -13,18 +13,18 @@
     </div>
     <div class="p-1 mt-3 mx-3 dark:text-white text-black">
         <div class=" w-full mt-4 dark:bg-[#141414] bg-[#ececec] rounded-xl flex items-center">
-                <div class=" px-4 py-2 flex gap-2 justify-evenly">
-                    <vue-awesome-paginate
-                        :total-items="totalItems"
-                        :modelValue="Currentpage"
-                        :show-breakpoint-buttons="true"
-                        :hidePrevNextWhenEnds="true"
-                        :items-per-page="pageItems"
-                        :max-pages-shown="1"
-                        :on-click="onClickHandler"
-                    />
-                </div>
+            <div class=" px-4 py-2 flex gap-2 justify-evenly">
+                <vue-awesome-paginate
+                    :total-items="totalItems"
+                    :modelValue="Currentpage"
+                    :show-breakpoint-buttons="true"
+                    :hidePrevNextWhenEnds="true"
+                    :items-per-page="pageItems"
+                    :max-pages-shown="1"
+                    :on-click="onClickHandler"
+                />
             </div>
+        </div>
         <div class="px-4 py-2 mt-5 dark:bg-[#141414] bg-[#ececec] rounded-xl">
             <h1 class="text-base font-bold opacity-90 mt-1 mb-3">Recent audits</h1>
             <div>
@@ -171,5 +171,6 @@ const deleteCache = () => {
 .active-page {
     @apply  dark:hover:bg-rose-900 dark:bg-rose-800 bg-rose-600 hover:bg-rose-600 text-white
 }
+
 </style>
 

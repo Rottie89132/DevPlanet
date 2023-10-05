@@ -26,7 +26,7 @@
 </template>
 
 <script setup>
-    import { vAutoAnimate } from "@formkit/auto-animate";
+    //import { vAutoAnimate } from "@formkit/auto-animate";
     const UsePropState = useState(`${useRoute().fullPath.replace("/", "")}${probs.index}`, () => false)
     const UseFirstState = useState(`${useRoute().fullPath.replace("/", "")}${probs.index}First`, () => false)
     const UseCurrentState = useState(`${useRoute().fullPath.replace("/", "")}${probs.index}`);
