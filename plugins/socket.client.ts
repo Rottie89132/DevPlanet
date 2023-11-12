@@ -9,7 +9,7 @@ export default defineNuxtPlugin(() => {
         provide: {
             StartSocket: () => {
                 if (socket) return;
-                socket = io(`wss://${window.location.host.split(":")[0]}:${config.public.SocketPORT || 3500}`);
+                socket = io(`ws://${window.location.host.split(":")[0]}:${config.public.SocketPORT || 3500}`);
 
                 socket.on("connect", () => {
                     console.log(`websocket connection established`);
