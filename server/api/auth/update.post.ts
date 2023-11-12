@@ -7,23 +7,18 @@ export default defineEventHandler(async (event) => {
 
             const validateInput = await readBody(event)
             if (!validateInput) return { status: 400, message: "The requested resource could not be modified" } 
-            
             const { Value, Server, type } = await readBody(event)
-            
-            const Serverdata: any = await Servers.find({ GuildID: Server.id });
-            const Channel: any = await Channels.find({ GuildId: Server.id });
+
+            const Serverdata: Record<string, any> | null = await Servers.find({ GuildID: Server.id });
+            const Channel: Record<string, any> | null = await Channels.find({ GuildId: Server.id });
 
             if (Serverdata.length < 1) return { status: 404, message: "The requested resource was not found" }
-
-            if (Channel.length < 1) await Channels.create({
-                GuildId: Server.id, GuildName: Server.name
-            })
+            if (Channel.length < 1) await Channels.create({GuildId: Server.id, GuildName: Server.name})
 
             const ValueExist: boolean = type == "review" ? Channel[0]?.ReviewChannel == Value.id : Channel[0]?.LogChannel == Value.id;
             const query: boolean = type == "review"
 
             const ValidValue = Serverdata[0].Channels.filter((object: any) => object.id == Value.id)[0] || null
-
             if (ValueExist || !ValidValue) return { status: 304, message: "The requested resource was not modified" }
             
             if (query) await Channels.findOneAndUpdate({GuildId: Server.id }, {$set: { ReviewChannel: Value.id }})

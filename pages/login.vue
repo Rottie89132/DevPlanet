@@ -61,11 +61,10 @@ const handleLogin = async (values, actions) => {
     setTimeout(() => {
         isloading.value = false
         actions.resetForm();
+        Message.value = " "
 
-        if (response._value) {
-            navigateTo("/")
-        }
-        else Message.value = "Password or username is incorrect!"
+        if (response._value) { navigateTo("/") }
+        else { Message.value = "Password or username is incorrect!" }
 
     }, 2000);
 }

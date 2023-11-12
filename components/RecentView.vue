@@ -1,6 +1,6 @@
 <template>
     <div v-auto-animate class="px-4 py-2 mt-8 dark:bg-[#141414] bg-[#ececec] rounded-xl">
-        <div class="my-3 dark:text-white text-black">
+        <div class="my-3 text-black dark:text-white">
             <h1 class="text-base font-bold opacity-90">Recent reviews</h1>
         </div>
         <div v-if="refreshing || response.status == 401 || response.status == 404" v-for="index in 6" :key="index" class="flex items-center justify-between p-4 my-2 select-none bg-[#F2F2F2] dark:bg-[#1a1a1a] rounded-xl animate-pulse">
@@ -22,12 +22,12 @@
                 <NuxtImg class=" border-2 dark:border-[#282828] border-white rounded-full h-[1.8rem] w-[1.8rem] -ms-3" :src="item.author.userAvatarUrl" draggable="false" :alt="item.author.userName" />
             </div>
             <div class="">
-                <h1 class="text-[0.6rem] font-bold dark:text-white text-black truncate" :class="index === 0 ? 'text-rose-100 ' : ''">{{ item.author.userName.charAt(0).toUpperCase() + item.author.userName.slice(1) }}</h1>
-                <h1 class="text-[0.5rem] dark:text-white text-black opacity-80" :class="index === 0 ? 'text-rose-100 ' : ''">{{ item.content.title.slice(0, 29) }}{{ item.content.title.length > 29 ? ".." : "" }}</h1>
+                <h1 class="text-[0.6rem] text-left font-bold dark:text-white text-black truncate" :class="index === 0 ? 'text-rose-100 ' : ''">{{ item.author.userName.charAt(0).toUpperCase() + item.author.userName.slice(1) }}</h1>
+                <h1 class="text-[0.5rem] text-left dark:text-white text-black opacity-80" :class="index === 0 ? 'text-rose-100 ' : ''">{{ item.content.title.slice(0, 29) }}{{ item.content.title.length > 29 ? ".." : "" }}</h1>
             </div>
             <div>
-                <p class="text-[0.6rem] font-bold dark:text-white text-black " :class="index === 0 ? 'text-rose-100 ' : ''"> {{ item.guild.guildName }}</p>
-                <p class="text-[0.5rem] dark:text-white text-black opacity-80 " :class="index === 0 ? 'text-rose-200 opacity-100 ' : ''">{{ item.metadata.metaTime }}</p>
+                <p class="text-[0.6rem] text-right font-bold dark:text-white text-black " :class="index === 0 ? 'text-rose-100 ' : ''"> {{ item.guild.guildName }}</p>
+                <p class="text-[0.5rem] text-right dark:text-white text-black opacity-80 " :class="index === 0 ? 'text-rose-200 opacity-100 ' : ''">{{ item.metadata.metaTime }}</p>
             </div>
         </div>
     </div>
@@ -35,7 +35,6 @@
 
 <script setup lang="ts">
 
-//import { vAutoAnimate } from "@formkit/auto-animate";
 const { refreshing, response, feed } = defineModels<{ refreshing: any, response: any, feed: any }>()
 
 </script>

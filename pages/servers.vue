@@ -7,9 +7,6 @@
                 <Icon :class="refreshing || statuscode.status == 401 ? 'animate-spin' : ''"  class="text-black dark:text-white opacity-60" name="ri:refresh-line" size="1.25em"/>
             </button>
         </div>
-        <button class="flex items-center justify-between p-3 mt-2 rounded-lg dark:hover:bg-rose-900 dark:bg-rose-800 bg-rose-600 hover:bg-rose-600 me-2" aria-label="remove">
-            <Icon class="text-white opacity-90" name="ri:delete-bin-6-line" size="1.25em"/>
-        </button>
     </div>
     <div>
         <Transition name="modal">
@@ -51,17 +48,17 @@
     <div class="p-1 mx-3 mt-3 text-black dark:text-white">
         <div class="px-4 py-2 mt-4 dark:bg-[#141414] bg-[#ececec] rounded-xl pb-4">
             <h1 class="mt-1 mb-3 text-base font-bold opacity-90">Server list</h1>
-            <div class="flex gap-2 overflow-auto ">
+            <div v-auto-animate class="flex gap-2 overflow-auto ">
                 <div v-if="refreshing || statuscode.status == 401 || statuscode.status == 404" v-for="data in pageItems" :key="data" class="grid items-center justify-center px-[1.48em] p-4 select-none bg-[#F2F2F2] dark:bg-[#1a1a1a] rounded-xl animate-pulse">
                     <div class="rounded-full dark:opacity-90 opacity-40 dark:bg-neutral-800 bg-[#838383] h-[3.5rem] w-[3.5rem] mb-3 "></div>
                     <div class=" w-full h-[0.1rem] p-[0.35rem] mb-1 rounded-full dark:opacity-70 opacity-40 dark:bg-neutral-800 bg-[#838383]"></div>
                     <div class=" h-[0.1rem] p-[0.35rem] mb-1 rounded-full dark:opacity-70 opacity-40 dark:bg-neutral-800 bg-[#838383]"></div>
                 </div>
-                <div v-else v-for="(item, index) in showitems" :key="item._id" :class="index == CurrentIndex ? ' bg-[#E3E3E3] dark:bg-[#101010]' : ' bg-[#F2F2F2] dark:bg-[#171717] hover:bg-[#E3E3E3] dark:hover:bg-[#101010]'" class=" transition-all grid items-center justify-center px-[1.48em] p-4 select-none rounded-xl" @click="ServerChannel(index)">
+                <div v-else v-for="(item, index) in showitems" :key="index" :class="index == CurrentIndex ? ' bg-[#E3E3E3] dark:bg-[#101010]' : ' bg-[#F2F2F2] dark:bg-[#171717] hover:bg-[#E3E3E3] dark:hover:bg-[#101010]'" class=" transition-all grid items-center justify-center px-[1.48em] p-4 select-none rounded-xl" @click="ServerChannel(index)">
                     <NuxtImg v-if="item.GuildIcon" class=" border-2 dark:border-[#282828] border-white rounded-full h-[3.5rem] w-[3.5rem] mb-3" :src="item.GuildIcon" draggable="false" :alt="item.GuildName"  />
                     <div v-else class=" flex items-center justify-center rounded-full dark:opacity-90 opacity-40 dark:bg-neutral-800 bg-[#838383] h-[3.5rem] w-[3.5rem] mb-3 "><icon size="2rem" name="tdesign:search-error"></icon></div>
                     <p class=" text-center text-[0.55rem] font-bold dark:text-white text-black">{{ item.GuildName.slice(0, 12) }}</p>
-                    <p class=" text-center text-[0.5rem] font-bold dark:text-white text-black opacity-80 mb-[0.60em]">Manage server</p>
+                    <p class=" text-center text-[0.4rem] md:text-[0.5em] font-bold dark:text-white text-black opacity-80 mb-[0.60em]">Manage server</p>
                 </div>
             </div>
         </div>  
@@ -112,9 +109,11 @@
 
 <script setup>
 import { UseFocusTrap } from '@vueuse/integrations/useFocusTrap/component'
+import { useVisitedPagesStore } from '~/stores/visitedPage';
 const { $StartSocket, $ClearSession } = useNuxtApp();
+const visitedPagesStore = useVisitedPagesStore();
 
-const refreshing = ref(false)
+const refreshing = ref(true)
 const channelData = ref({})
 const statuscode = ref({})
 const showitems = ref([])
@@ -144,8 +143,8 @@ onMounted(() => {
     $ClearSession(statuscode, statuscode);
 })
 
-
 const router = useRouter()
+const pageName = useRoute().fullPath.replace("/", "").split("?")[0];
 const Current = useState('CurrentIndex', () => Number(useRoute().query.index || 0))
 const CurrentIndex = useState('CurrentIndex') ? useState('CurrentIndex') : useRoute().query.Index;
 
@@ -156,21 +155,42 @@ if (!useRoute().query.index) {
 const { data: response } = await useLazyFetch("/api/feeds/guilds");
 const { data: server } = await useLazyFetch(`/api/feeds/Channels`)
 
-if (response.value) {
-    statuscode.value = { status: response.value.status }
-
-    showitems.value = response.value.server
-    channelData.value = server.value.data[CurrentIndex.value]
-}
-
-setTimeout(() => {
+if (!visitedPagesStore.hasVisitedPage(pageName)) {
+    setTimeout(() => {
+        if (response.value) {
+            statuscode.value = { status: response.value.status }
+            if (response.value.status == 200) {
+                showitems.value = response.value.server
+                channelData.value = server.value.data[CurrentIndex.value]
+                refreshing.value = false;
+                if (!visitedPagesStore.hasVisitedPage(pageName)) {
+                    visitedPagesStore.addVisitedPage(pageName);
+                }
+            }
+        }
+    }, 500);
+} else {
+    
     if (response.value) {
         statuscode.value = { status: response.value.status }
-
-        showitems.value = response.value.server
-        channelData.value = server.value?.data[CurrentIndex.value]
+        if (response.value.status == 200) {
+            showitems.value = response.value.server
+            channelData.value = server.value.data[CurrentIndex.value]
+            refreshing.value = false;
+        }
+    } else {
+        setTimeout(async () => {
+            if (response.value) {
+                statuscode.value = { status: response.value.status }
+                if (response.value.status == 200) {
+                    showitems.value = response.value.server
+                    channelData.value = server.value.data[CurrentIndex.value]
+                    refreshing.value = false;
+                }
+            }
+        },500)
     }
-}, 100);
+}
 
 const ServerChannel = (index) => {
 
@@ -242,11 +262,6 @@ const handleUpdate = async (values) => {
 
         setTimeout(() => {
             Load.value = false
-            // ElNotification({
-            //     title: 'Success',
-            //     message: "The action was successful",
-            //     showClose: false,
-            // })
         }, 2000)
     } else {
         Load.value = true

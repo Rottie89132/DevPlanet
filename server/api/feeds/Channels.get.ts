@@ -5,8 +5,8 @@ export default defineEventHandler(async (event)=> {
     if(authorized.Status == 200){
         if(authorized.response.Role == 'Admin') {
 
-            const channel: any = await Channels.find();
-            const Serverdata: any = await Servers.find();
+            const channel: Record<string, any> | null = await Channels.find();
+            const Serverdata: Record<string, any> | null = await Servers.find();
 
             const data = new Array();
             let ArrayCount: number = 0;

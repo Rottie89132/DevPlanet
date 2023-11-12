@@ -48,24 +48,15 @@ setTimeout(() => {
 const { 
   $StartSocket, 
   $ClearSession,
-  $CloseSocket, 
   $EventSession,
   $ServerSession
 } = useNuxtApp();
 
 onMounted(() => {
   $StartSocket();
-  
   $ClearSession(response, server);
   $ServerSession(feed, ReviewCount, ServerCount, response, server);
   $EventSession(feed, ReviewCount, ServerCount, response, server);
-  
-  setTimeout(() => {
-      if (response.value.status == 401) {
-        $CloseSocket()
-        navigateTo('/login')
-      }
-  }, 2000);
   
 })
 

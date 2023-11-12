@@ -8,9 +8,9 @@ export default defineEventHandler(async (event)=> {
     if(!validateInput) return false
 
     const { email, password } = await readBody(event)
-    if(!password) return false
+    if (!password || !email) return false
 
-    const user: any = await User.findOne({ Email: email })
+    const user: Record<string, any> | null = await User.findOne({ Email: email })
     if (user == null) return false
 
     user.ComparePasswords = async function (EnteredPassword: string) {

@@ -4,7 +4,7 @@ export default defineEventHandler(async (event)=> {
 
     if(authorized.Status == 200){
         if(authorized.response.Role == 'Admin') {
-            const serverCount: string[] = await Servers.find()
+            const serverCount: Record<string, any> | null = await Servers.find()
             
             if(serverCount.length > 0) 
                 return { status: 200, message: "The requested resource was authorized", count: serverCount.length}

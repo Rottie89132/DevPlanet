@@ -4,16 +4,16 @@
         <div class="flex items-center">
             <LazyMenu/>
             <button class="flex items-center justify-between p-3 mt-2 rounded-lg dark:bg-[#141414] bg-[#EBEBEB] me-2" aria-label="refresh" @click="refresh" :disabled="refreshing">
-                <Icon :class="refreshing || statuscode.status == 401 ? 'animate-spin' : ''"  class="dark:text-white text-black opacity-60" name="ri:refresh-line" size="1.25em"/>
+                <Icon :class="refreshing || statuscode.status == 401 ? 'animate-spin' : ''"  class="text-black dark:text-white opacity-60" name="ri:refresh-line" size="1.25em"/>
             </button>
         </div>
         <button class="flex items-center justify-between p-3 mt-2 rounded-lg dark:bg-[#141414] bg-[#EBEBEB] me-2" aria-label="cache" @click="deleteCache">
-            <Icon  class="dark:text-white text-black opacity-60" name="bi:bug-fill" size="1.25em"/>
+            <Icon  class="text-black dark:text-white opacity-60" name="bi:bug-fill" size="1.25em"/>
         </button>
     </div>
-    <div class="p-1 mt-3 mx-3 dark:text-white text-black">
+    <div class="p-1 mx-3 mt-3 text-black dark:text-white">
         <div class=" w-full mt-4 dark:bg-[#141414] bg-[#ececec] rounded-xl flex items-center">
-            <div class=" px-4 py-2 flex gap-2 justify-evenly">
+            <div class="flex gap-2 px-4 py-2 justify-evenly">
                 <vue-awesome-paginate
                     :total-items="totalItems"
                     :modelValue="Currentpage"
@@ -26,7 +26,7 @@
             </div>
         </div>
         <div class="px-4 py-2 mt-5 dark:bg-[#141414] bg-[#ececec] rounded-xl">
-            <h1 class="text-base font-bold opacity-90 mt-1 mb-3">Recent audits</h1>
+            <h1 class="mt-1 mb-3 text-base font-bold opacity-90">Recent audits</h1>
             <div>
                 <div v-if="refreshing || statuscode.status == 401 || statuscode.status == 404" v-for="data in pageItems" :key="data" class="flex items-center justify-between p-4 my-2 select-none bg-[#F2F2F2] dark:bg-[#1a1a1a] rounded-xl animate-pulse">
                     <div class="flex ">
@@ -46,14 +46,14 @@
                         <NuxtImg class=" border-2 dark:border-[#282828] border-white rounded-full h-[1.8rem] w-[1.8rem]" :src="item.guild.guildIconUrl" draggable="false" :alt="item.guild.guildName" />
                         <NuxtImg class=" border-2 dark:border-[#282828] border-white rounded-full h-[1.8rem] w-[1.8rem] -ms-3" :src="item.author.userAvatarUrl" draggable="false" :alt="item.author.userName" />
                     </div>
-                    <div class=" ">
-                        <h1 class="text-[0.6rem] font-bold dark:text-white text-black">{{ item.author.userName.charAt(0).toUpperCase() + item.author.userName.slice(1) }}</h1>
-                        <h1 class="text-[0.5rem] dark:text-white text-black opacity-80">{{ item.content.title.slice(0, 29)}}{{item.content.title.length > 29 ? ".." : ""}}</h1>
+                    <div>
+                        <h1 class="text-[0.6rem] text-left font-bold dark:text-white text-black">{{ item.author.userName.charAt(0).toUpperCase() + item.author.userName.slice(1) }}</h1>
+                        <h1 class="text-[0.5rem] text-left dark:text-white text-black opacity-80">{{ item.content.title.slice(0, 29)}}{{item.content.title.length > 29 ? ".." : ""}}</h1>
                     </div>
                     <div>
                         <p v-if="!visitedPagesStore.hasVisitedPage(item.metadata.metaId)" class=" border-[0.26em] dark:border-[#141414] border-[#ececec] flex justify-center items-center gap-1 rounded-md text-center py-[0.2em] px-[0.5em] right-12 absolute -mt-8 dark:group-hover:bg-rose-900 dark:bg-rose-800 bg-rose-600 group-hover:bg-rose-600 text-xs text-white">New</p>
-                        <p class="text-[0.6rem] font-bold dark:text-white text-black"> {{ item.guild.guildName }}</p>
-                        <p class="text-[0.5rem] dark:text-white text-black opacity-80">{{ item.metadata.metaTime }}</p>
+                        <p class="text-[0.6rem] text-right font-bold dark:text-white text-black"> {{ item.guild.guildName }}</p>
+                        <p class="text-[0.5rem] text-right dark:text-white text-black opacity-80">{{ item.metadata.metaTime }}</p>
                     </div>
                 </div>
             </div>
@@ -65,7 +65,8 @@
 import { useVisitedPagesStore } from '~/stores/visitedPage';
 const visitedPagesStore = useVisitedPagesStore();
 
-const refreshing = ref(false);
+
+const refreshing = ref(true);
 const Currentpage = ref(1)
 const showitems = ref([])
 const totalItems = ref(1)
@@ -73,6 +74,7 @@ const pageItems = ref(8)
 const statuscode = ref({})
 
 const router = useRouter()
+const pageName = useRoute().fullPath.replace("/", "").split("?")[0];
 const Current = useState('Current', () => Number(useRoute().query.page || 1))
 const CurrentCounter = useState('Current') ? useState('Current') : useRoute().query.page;
 
@@ -85,48 +87,63 @@ definePageMeta({
     middleware: ["session"],
 });
 
-onMounted(() => {
+onMounted( async () => {
     $StartSocket();
     $ClearSession(statuscode, statuscode);
-
 })
 
 const { $StartSocket, $ClearSession } = useNuxtApp();
+
 if (!useRoute().query.page) {
     router.push({ path: '/audits', query: { page: Number(CurrentCounter.value) } })
 } 
 
 Currentpage.value = CurrentCounter.value
-const { data: response } = CurrentCounter.value > 1 ? await useLazyFetch(`/api/feeds/audit?page=${Currentpage.value}`) : await useLazyFetch("/api/feeds/audit?count=8");
+const { data: response } = await useLazyFetch(`/api/feeds/audit?page=${Currentpage.value}`);
 
-if (response.value) {
-    statuscode.value = { status: response.value.status }
-    
-    if (response.value.status == 200) {
-        totalItems.value = response.value.totalitems
-        showitems.value = response.value.audit
-    } else {
-        navigateTo(`/`)
-    }
-}
+if (!visitedPagesStore.hasVisitedPage(pageName)) {
+    setTimeout(() => {
+        if (response.value) {
+            statuscode.value = { status: response.value.status }
 
-setTimeout(() =>{
-    if (response.value) {
+            if (response.value.status == 200) {
+                totalItems.value = response.value.totalitems
+                showitems.value = response.value.audit
+                refreshing.value = false;
+                if(!visitedPagesStore.hasVisitedPage(pageName)) {
+                    visitedPagesStore.addVisitedPage(pageName); 
+                }
+            }
+        }
+    }, 500);
+} else {
+    if(response.value) {
         statuscode.value = { status: response.value.status }
 
         if (response.value.status == 200) {
             totalItems.value = response.value.totalitems
             showitems.value = response.value.audit
-        } 
+            refreshing.value = false;
+        }
+    } else {
+        setTimeout(async () => {
+            statuscode.value = { status: response.value.status }
+
+            if (response.value.status == 200) {
+                totalItems.value = response.value.totalitems
+                showitems.value = response.value.audit
+                refreshing.value = false;
+            }
+        }, 500)
     }
-}, 100);
+}
 
 const onClickHandler = async (page) => {
     Currentpage.value = page
     Current.value = page
 
     router.push({ path: '/audits', query: { page: Number(page) } })
-    window.localStorage.setItem('page', Number(page) )
+    useLocalStorage("page").value = Number(page)
     
     if (response.value.status == 200){
         const { data: items } = await useLazyFetch(`/api/feeds/audit?page=${Currentpage.value}`);

@@ -1,14 +1,17 @@
 export const useVisitedPagesStore = defineStore('visitedPages', () => {
     const visitedPages = ref([]);
+    
+    
 
     onMounted(() => {
-        const storedPages = JSON.parse(localStorage.getItem('visitedPages')) || [];
-        visitedPages.value = storedPages;
+        const storedPages = useLocalStorage("visitedPages", []).value
+        visitedPages.value = storedPages
+        
     });
 
     function addVisitedPage(pageName) {
         visitedPages.value.push(pageName);
-        localStorage.setItem('visitedPages', JSON.stringify(visitedPages.value));
+        useLocalStorage("visitedPages").value = JSON.stringify(visitedPages.value)
     }
 
     function hasVisitedPage(pageName) {

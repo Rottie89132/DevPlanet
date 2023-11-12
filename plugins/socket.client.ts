@@ -25,6 +25,7 @@ export default defineNuxtPlugin(() => {
                 if (socket) {
                     socket.close();
                     socket = null;
+                    useCookie("token").value = null
                 }
             },
             ClearSession: (response: any, server: any ) => {

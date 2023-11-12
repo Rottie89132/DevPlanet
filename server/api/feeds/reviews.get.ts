@@ -6,7 +6,7 @@ export default defineEventHandler(async (event)=> {
 
     if(authorized.Status == 200){
         if(authorized.response.Role == 'Admin') {
-            const ReviewsCount: any = await Reviews.find()
+            const ReviewsCount: Record<string, any> | null = await Reviews.find()
             let count = 0
             
             ReviewsCount.forEach((item: any) => {

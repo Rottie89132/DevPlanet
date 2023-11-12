@@ -1,27 +1,21 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-// import path from 'path'
-// import fs from 'fs'
 
 export default defineNuxtConfig({
-  modules: [ 
+  modules: [
     '@vue-macros/nuxt',
     '@nuxt/image',
     '@vueuse/nuxt',
     'nuxt-icon',
-    'nuxt-mongoose',
     '@nuxtjs/tailwindcss',
     '@nuxtjs/color-mode',
     '@vite-pwa/nuxt',
     '@nuxtjs/device',
-    'nuxt-scheduler', 
+    'nuxt-scheduler',
     '@pinia/nuxt',
     '@nuxt/devtools',
     '@formkit/auto-animate/nuxt',
-    '@element-plus/nuxt'
+    'nuxt-mongoose'
   ], 
-  elementPlus: { 
-    themes: ['dark'],
-  },
   devtools: {
     enabled: false,
 

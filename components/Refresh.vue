@@ -1,6 +1,6 @@
 <template>
     <button @click="onrefresh" class="flex items-center justify-between p-3 mt-2 rounded-lg dark:bg-[#141414] bg-[#EBEBEB] me-2" :disabled="disabled" aria-label="refresh">
-        <Icon :class="refreshing || response.status == 401 ? 'animate-spin' : ''"  class="dark:text-white text-black opacity-60" name="ri:refresh-line" size="1.25em"/>
+        <Icon :class="refreshing || response.status == 401 ? 'animate-spin' : ''"  class="text-black dark:text-white opacity-60" name="ri:refresh-line" size="1.25em"/>
     </button>
 </template>
 
@@ -10,7 +10,9 @@ const { refreshing, disabled, response, feed, ReviewCount, ServerCount, server }
     refreshing: Boolean, disabled: boolean, response: any, feed: any, ReviewCount: any, ServerCount: any, server: any
 }>()
 
+
 async function onrefresh() {
+    
         refreshing.value = true;
         disabled.value = true;
         const res: any = await $fetch("/api/feeds/audit?count=6")
