@@ -11,7 +11,7 @@ const { SocketPORT, PORT } = process.env
 for (const key in interfaces) {
   for (const iface of interfaces[key]) {
     if (iface.family === 'IPv4' && !iface.internal) {
-      addresses.push(`http://${iface.address}:${PORT || 3000}`);
+      addresses.push(`https://${iface.address}:${PORT || 3000}`);
     }
   }
 }
@@ -20,7 +20,7 @@ export default defineNitroPlugin( async() => {
   
   const io = new Server(SocketPORT || 3500, {
     cors: { 
-      origin: [`http://localhost:${PORT || 3000}`, ...addresses],
+      origin: [`https://localhost:${PORT || 3000}`, "https://planetaire.vercel.app/", ...addresses],
       credentials: true
     }
 });
