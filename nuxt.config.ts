@@ -61,6 +61,21 @@ export default defineNuxtConfig({
       background_color: "#101010",
       theme_color: "#101010",
       display_override: ["window-controls-overlay", "standalone", "minimal-ui", "fullscreen", "browser"],
+      screenshots: [
+        {
+          "src": "image/320x320.png",
+          "sizes": "320x320",
+          "type": "image/png",
+          "form_factor": "wide",
+          "label": "DevPlanet"
+        },
+        {
+          "src": "image/320x320.png",
+          "sizes": "320x320",
+          "type": "image/png",
+          "label": "DevPlanet"
+        }
+      ],
       icons: [
         {
           src: "icons/icon_144.png",
