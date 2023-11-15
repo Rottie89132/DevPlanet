@@ -47,7 +47,7 @@ export default defineEventHandler(async (event) => {
                     UserSessions.delete(Session);
                     PushServer.trigger("Socket", Session, Session);
                 }
-            }, 0.1 * 60 * 1000) 
+            }, 120 * 60 * 1000) 
         }
     } 
 
