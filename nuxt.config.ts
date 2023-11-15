@@ -30,15 +30,13 @@ export default defineNuxtConfig({
     uri: process.env.DataBaseUrl,
   },
   runtimeConfig: {
-    clientId: process.env.clientId,
-    clientSecret: process.env.clientSecret,
-    clientToken: process.env.token,
+    PusherAppID: process.env.PusherAppID,
+    PusherAppSecret: process.env.PusherAppSecret,
     PrivateWorkerKey: process.env.VapidPrivate,
     public: {
-      Environment: process.env.Environment,
-      SocketUrl: process.env.SocketUrl,
+      PusherAppKey: process.env.PusherAppKey,
+      cluster: process.env.cluster,
       WorkerKey: process.env.VapidPublic,
-      SocketPORT: process.env.SocketPORT
     }
   },
   pinia: {

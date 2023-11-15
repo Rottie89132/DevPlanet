@@ -1,50 +1,50 @@
-import { io } from "socket.io-client";
-let socket: any = null;
+import Pusher from 'pusher-js';
+let pusher: any = null;
+let channel: any = null;
 let Countstate: Boolean = false;
 
 export default defineNuxtPlugin(() => {
     const config = useRuntimeConfig()
-    const SocketUrl: any = config.public.Environment == "Production" ? config.public.SocketUrl : `ws://${window.location.host.split(":")[0]}:${config.public.SocketPORT || 3500}`
-    
+
     return {
         provide: {
             StartSocket: () => {
-                if (socket) return;
-                socket = io(SocketUrl);
-
-                socket.on("connect", () => {
-                    console.log(`websocket connection established`);
-                    Countstate = true;
-                });
-
-                socket.on("disconnect", () => {
-                    console.log("websocket connection closed");
-                    Countstate = false;
-                });
+                if (pusher) return;
+                console.log(`Pusher connection established`);
+                pusher = new Pusher(config.public.PusherAppKey, { cluster: config.public.cluster }); 
+                channel = pusher.subscribe('Socket');
+                Countstate = true;
+                
             },
             CloseSocket: () => {
-                if (socket) {
-                    socket.close();
-                    socket = null;
-                    useCookie("token").value = null
+                if (pusher) {
+                    console.log("Pusher connection closed");
+                    pusher.unsubscribe('Socket');
+                    pusher.disconnect();
+                    pusher = null;
+                    useCookie("token").value = null;
+                    Countstate = false;
                 }
             },
-            ClearSession: (response: any, server: any ) => {
-                socket.on(useCookie("token").value, async (event: any) => {
+            ClearSession: (response: any, server: any) => {
+                channel.bind(useCookie("token").value, async (event: any) => {
 
-                    if(Countstate) console.log("Websocket event received! ");
+                    if (Countstate) console.log("Pusher event received! ");
 
                     useCookie("token").value = null;
                     try {
                         response.value = { status: 401 };
                         server.value = { status: 401 };
-                    } catch {}
+                    } catch { }
 
-                    if (socket) {
-                        socket.close();
-                        socket = null;
+                    if (pusher) {
+                        console.log("Pusher connection closed");
+                        pusher.unsubscribe('Socket');
+                        pusher.disconnect();
+                        pusher = null;
+                        Countstate = false;
                     }
-                    
+
                     setTimeout(() => {
                         if (!Countstate) {
                             Countstate = true;
@@ -52,17 +52,16 @@ export default defineNuxtPlugin(() => {
                             navigateTo("/login")
                         }
                     }, 1000);
-
-                });
+                })
             },
-            EventSession: ( feed: any, ReviewCount: any, ServerCount: any, response: any, server: any ) => {
-                socket.on(`event`, async (event: any) => {
+            EventSession: (feed: any, ReviewCount: any, ServerCount: any, response: any, server: any) => {
+                channel.bind(`event`, async (event: any) => {
                     const { data: review }: any = await useFetch("/api/feeds/reviews");
                     const { data: server }: any = await useFetch("/api/feeds/server");
 
                     setTimeout(async () => {
-                        console.log("Websocket event received! ");
-                        
+                        console.log("Pusher event received! ");
+
                         ReviewCount.value = review.value.count;
                         ServerCount.value = server.value.count;
                         response.value = { status: server.value.status };
@@ -71,12 +70,12 @@ export default defineNuxtPlugin(() => {
                 });
             },
             ServerSession: (feed: any, ReviewCount: any, ServerCount: any, response: any) => {
-                socket.on('AsyncRefresh', async (event: any) => {
+                channel.bind('AsyncRefresh', async (event: any) => {
                     const { data: review }: any = await useFetch("/api/feeds/reviews");
                     const { data: server }: any = await useFetch("/api/feeds/server");
 
                     setTimeout(async () => {
-                        console.log("Websocket event received! ");
+                        console.log("Pusher event received! ");
 
                         ReviewCount.value = review.value.count;
                         ServerCount.value = server.value.count;

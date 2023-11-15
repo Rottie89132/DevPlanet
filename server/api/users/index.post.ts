@@ -1,10 +1,16 @@
+import PusherServer from "pusher"
+import webPush from 'web-push';
+
 const UserSessions = new Map();
 const config = useRuntimeConfig()
-const SocketUrl: any = config.public.Environment == "Production" ? config.public.SocketUrl : `http://localhost:${config.public.SocketPORT}`
 
-import io from 'socket.io-client';
-import webPush from 'web-push';
-const socket = io(SocketUrl);
+const PushServer = new PusherServer({
+    appId: config.PusherAppID,
+    key: config.public.PusherAppKey,
+    secret: config.PusherAppSecret,
+    cluster: config.public.cluster,
+    useTLS: true
+});
 
 export default defineEventHandler(async (event) => {
 
@@ -39,9 +45,9 @@ export default defineEventHandler(async (event) => {
                     }
 
                     UserSessions.delete(Session);
-                    socket.emit('SessionExpires', Session)
+                    PushServer.trigger("Socket", "SessionExpires", Session);
                 }
-            }, 120* 60 * 1000) 
+            }, 60 * 60 * 1000) 
         }
     } 
 
