@@ -20,7 +20,7 @@ export default defineNitroPlugin( async() => {
   
   const io = new Server(SocketPORT || 3500, {
     cors: { 
-      origin: [`http://localhost:${PORT || 3000}`, ...addresses],
+      origin: "*",
       credentials: true
     }
 });

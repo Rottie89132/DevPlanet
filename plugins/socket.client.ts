@@ -4,12 +4,13 @@ let Countstate: Boolean = false;
 
 export default defineNuxtPlugin(() => {
     const config = useRuntimeConfig()
-
+    const SocketUrl: any = config.public.Environment == "Production" ? config.public.SocketUrl : `ws://${window.location.host.split(":")[0]}:${config.public.SocketPORT || 3500}`
+    
     return {
         provide: {
             StartSocket: () => {
                 if (socket) return;
-                socket = io(`ws://${window.location.host.split(":")[0]}:${config.public.SocketPORT || 3500}`);
+                socket = io(SocketUrl);
 
                 socket.on("connect", () => {
                     console.log(`websocket connection established`);

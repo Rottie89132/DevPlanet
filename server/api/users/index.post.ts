@@ -1,8 +1,10 @@
 const UserSessions = new Map();
 const config = useRuntimeConfig()
+const SocketUrl: any = config.public.Environment == "Production" ? config.public.SocketUrl : `http://localhost:${config.public.SocketPORT}`
+
 import io from 'socket.io-client';
 import webPush from 'web-push';
-const socket = io(`http://localhost:${config.public.SocketPORT}`);
+const socket = io(SocketUrl);
 
 export default defineEventHandler(async (event) => {
 

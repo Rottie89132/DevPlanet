@@ -1,7 +1,9 @@
 import { useScheduler } from "#scheduler"
 const config = useRuntimeConfig()
+const SocketUrl: any = config.public.Environment == "Production" ? config.public.SocketUrl : `http://localhost:${config.public.SocketPORT}`
+
 import io from 'socket.io-client';
-const socket = io(`http://localhost:${config.public.SocketPORT}`);
+const socket = io(SocketUrl);
 
 export default defineNitroPlugin(() => {
     const scheduler = useScheduler();
