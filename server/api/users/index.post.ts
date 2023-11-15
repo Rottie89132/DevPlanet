@@ -45,9 +45,9 @@ export default defineEventHandler(async (event) => {
                     }
 
                     UserSessions.delete(Session);
-                    PushServer.trigger("Socket", "SessionExpires", Session);
+                    PushServer.trigger("Socket", Session, Session);
                 }
-            }, 60 * 60 * 1000) 
+            }, 0.1 * 60 * 1000) 
         }
     } 
 
