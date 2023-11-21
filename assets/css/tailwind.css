@@ -8,8 +8,6 @@
     display: none;
 }
 
-
-
 body {
     overflow-x: hidden;
     @apply dark:bg-[#101010] bg-[#F8F8F8]; 
@@ -21,7 +19,6 @@ input:-webkit-autofill:hover,
 input:-webkit-autofill:focus {
     @apply dark:darky lighty dark:border-neutral-800 border-gray-300 border-2 
 }
-
 
 @layer components {
     .font-kufi {
@@ -44,6 +41,10 @@ input:-webkit-autofill:focus {
 
     .Select-Input:focus {
         @apply ring-4 dark:ring-neutral-800 ring-gray-300 outline-none
+    }
+
+    .btn-focus {
+        @apply outline-none 
     }
 
     .btn-focus:focus {
