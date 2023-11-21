@@ -40,7 +40,7 @@ input:-webkit-autofill:focus {
     }
 
     .Select-Input:focus {
-        @apply ring-2 dark:ring-neutral-800 ring-gray-300 outline-none
+        @apply ring-4 dark:ring-neutral-800 ring-gray-300 outline-none
     }
 
     .btn-focus {
@@ -48,7 +48,7 @@ input:-webkit-autofill:focus {
     }
 
     .btn-focus:focus {
-        @apply ring-2 dark:ring-neutral-800 ring-gray-300 outline-none
+        @apply ring-4 dark:ring-neutral-800 ring-gray-300 outline-none 
     }
 
     .btn-login {
@@ -59,6 +59,17 @@ input:-webkit-autofill:focus {
     .btn-login:hover {
         @apply bg-rose-600 dark:bg-rose-900
     }
+
+    .btn-login:focus {
+        @apply ring-4 dark:ring-rose-950 ring-rose-700
+    }
+
+    
+
+    .tab-index {
+        @apply focus:dark:bg-[#101010] focus:bg-[#E3E3E3] outline-none
+    }
+    
 
 }
 

@@ -3,11 +3,11 @@
     <div class="flex items-center justify-between my-2 me-2">
         <div class="flex items-center">
             <LazyMenu/>
-            <button class="flex items-center justify-between p-3 mt-2 rounded-lg dark:bg-[#141414] bg-[#EBEBEB] me-2" aria-label="refresh" @click="refresh" :disabled="refreshing">
+            <button class="btn-focus outline-none flex items-center justify-between p-3 mt-2 rounded-lg dark:bg-[#141414] bg-[#EBEBEB] me-2" aria-label="refresh" @click="refresh" :disabled="refreshing">
                 <Icon :class="refreshing || statuscode.status == 401 ? 'animate-spin' : ''"  class="text-black dark:text-white opacity-60" name="ri:refresh-line" size="1.25em"/>
             </button>
         </div>
-        <button class="flex items-center justify-between p-3 mt-2 rounded-lg dark:bg-[#141414] bg-[#EBEBEB] me-2" aria-label="cache" @click="deleteCache">
+        <button class="btn-focus outline-none flex items-center justify-between p-3 mt-2 rounded-lg dark:bg-[#141414] bg-[#EBEBEB] me-2" aria-label="cache" @click="deleteCache">
             <Icon  class="text-black dark:text-white opacity-60" name="bi:bug-fill" size="1.25em"/>
         </button>
     </div>
@@ -41,7 +41,7 @@
                         <div class="w-16 h-[0.1rem] p-[0.35rem] rounded-full dark:opacity-50 opacity-30 dark:bg-neutral-800 bg-[#838383]"></div>
                     </div>  
                 </div>
-                <div v-else v-for="item in showitems" key="item._id" @click="navigateTo(`/${item.metadata.metaId}`)" class="group flex items-center justify-between p-4 my-2 select-none bg-[#F2F2F2] hover:bg-[#E3E3E3] dark:bg-[#171717] dark:hover:bg-[#101010] rounded-xl">
+                <div v-else v-for="(item, index) in showitems" key="item._id" tabindex="0" @keydown.enter="navigateTo(`/${item.metadata.metaId}`)" @click="navigateTo(`/${item.metadata.metaId}`)" class=" tab-index group flex items-center justify-between p-4 my-2 select-none bg-[#F2F2F2] hover:bg-[#E3E3E3] dark:bg-[#171717] dark:hover:bg-[#101010] rounded-xl">
                     <div class="flex ">
                         <NuxtImg class=" border-2 dark:border-[#282828] border-white rounded-full h-[1.8rem] w-[1.8rem]" :src="item.guild.guildIconUrl" draggable="false" :alt="item.guild.guildName" />
                         <NuxtImg class=" border-2 dark:border-[#282828] border-white rounded-full h-[1.8rem] w-[1.8rem] -ms-3" :src="item.author.userAvatarUrl" draggable="false" :alt="item.author.userName" />
@@ -182,11 +182,15 @@ const deleteCache = () => {
 }
 
 .paginate-buttons {
-    @apply cursor-pointer dark:bg-[#1a1a1a] dark:hover:bg-[#232323] bg-[#ffffff] hover:bg-[#dfdfdf] w-10 h-10 rounded-md dark:text-white
+    @apply cursor-pointer dark:bg-[#1a1a1a] dark:hover:bg-[#232323] bg-[#ffffff] hover:bg-[#dfdfdf] w-10 h-10 rounded-md dark:text-white btn-focus outline-none 
 }
 
 .active-page {
     @apply  dark:hover:bg-rose-900 dark:bg-rose-800 bg-rose-600 hover:bg-rose-600 text-white
+}
+
+.active-page:focus {
+    @apply ring-4 dark:ring-rose-950 ring-rose-700
 }
 
 </style>
