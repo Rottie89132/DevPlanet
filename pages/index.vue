@@ -3,14 +3,29 @@
   <div class="flex items-center justify-between my-2 me-2">
     <div class="flex items-center">
       <LazyMenu/>
-      <LazyRefresh v-model:server="server" v-model:ServerCount="ServerCount" v-model:ReviewCount="ReviewCount" v-model:refreshing="refreshing"
-        v-model:disabled="disabled" v-model:response="response" v-model:feed="feed" />
+      <LazyRefresh 
+        v-model:server="server"
+        v-model:ServerCount="ServerCount"
+        v-model:ReviewCount="ReviewCount"
+        v-model:refreshing="refreshing"
+        v-model:disabled="disabled" 
+        v-model:response="response" 
+        v-model:feed="feed" />
     </div>
     <LazySubscribe/>
     </div>
   <LazyDashboard>
-    <LazyReviewStats v-model:response="response" v-model:server="server" v-model:hidden="hidden" v-model:refreshing="refreshing" v-model:ReviewCount="ReviewCount" v-model:ServerCount="ServerCount" />
-    <LazyRecentView v-model:refreshing="refreshing" v-model:response="response" v-model:feed="feed"/>
+    <LazyReviewStats 
+      v-model:response="response" 
+      v-model:server="server"
+      v-model:hidden="hidden"
+      v-model:refreshing="refreshing"
+      v-model:ReviewCount="ReviewCount"
+      v-model:ServerCount="ServerCount" />
+    <LazyRecentView 
+      v-model:refreshing="refreshing" 
+      v-model:response="response" 
+      v-model:feed="feed"/>
   </LazyDashboard>
 </template>
 

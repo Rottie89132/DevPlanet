@@ -2,14 +2,14 @@
     <VitePwaManifest/>
     <div class="mx-4 ">
         <div class="flex items-center justify-start gap-4 my-2">
-            <button @click="$router.back()"  class="flex items-center justify-between p-3 mt-2 rounded-lg bg-rose-600 hover:bg-rose-700 dark:bg-rose-800 dark:hover:bg-rose-900 "
+            <button @click="$router.back()"  class="flex items-center justify-between p-3 mt-2 rounded-lg outline-none focus:ring-4 focus:dark:ring-rose-950 focus:ring-rose-700 bg-rose-600 hover:bg-rose-700 dark:bg-rose-800 dark:hover:bg-rose-900 "
                 aria-label="returnToHome">
                 <icon name="material-symbols:keyboard-return" size="1.25em" class="text-white" />
             </button>
             <div class=" text-xs w-full dark:text-white text-black dark:bg-[#141414] bg-[#ececec] rounded-lg p-3 py-[0.85rem] mt-2 flex items-center justify-start gap-2">
-                <div class="flex items-center justify-center gap-2 opacity-80 hover:opacity-100">
+                <div class="flex items-center justify-center gap-2 outline-none btn-focus opacity-80 hover:opacity-100">
                     <icon name="material-symbols:other-houses" size="1.25em" />
-                    <NuxtLink to="/">Home</NuxtLink>
+                    <NuxtLink class="outline-none btn-focus" to="/">Home</NuxtLink>
                 </div>
                 <icon name="material-symbols:arrow-forward-ios-rounded" size="1em" class="text-black opacity-80 dark:text-white" />
                 <p class=" opacity-80 hover:opacity-100 me-1">ID</p>
