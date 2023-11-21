@@ -16,7 +16,7 @@
                 <div class="w-16 h-[0.1rem] p-[0.35rem] rounded-full dark:opacity-50 opacity-30 dark:bg-neutral-800 bg-[#838383]"></div>
             </div>  
         </div>
-        <div v-else v-for="(item, index) in feed" :key="item" tabindex="0" class=" flex items-center justify-between p-4 my-2 select-none bg-[#F2F2F2] hover:bg-[#E3E3E3] dark:bg-[#171717] dark:hover:bg-[#101010] rounded-xl" :class="index === 0 ? 'bg-rose-600 hover:bg-rose-700 dark:bg-rose-800 dark:hover:bg-rose-900 focus:ring-4 focus:dark:ring-rose-950 focus:ring-rose-700 outline-none' : index > 5 ? 'hidden': 'tab-index'" @keydown.enter="navigateTo(`/${item.metadata.metaId}`)" @click="navigateTo(`/${item.metadata.metaId}`)">
+        <div v-else v-for="(item, index) in feed" :key="item" class="flex items-center justify-between p-4 my-2 select-none bg-[#F2F2F2] hover:bg-[#E3E3E3] dark:bg-[#171717] dark:hover:bg-[#101010] rounded-xl" :class="index === 0 ? 'bg-rose-600 hover:bg-rose-700 dark:bg-rose-800 dark:hover:bg-rose-900 ' : index > 5 ? 'hidden': ''" @click="navigateTo(`/${item.metadata.metaId}`)">
             <div class="flex ">
                 <NuxtImg class=" border-2 dark:border-[#282828] border-white rounded-full h-[1.8rem] w-[1.8rem]" :src="item.guild.guildIconUrl" draggable="false" :alt="item.guild.guildName" />
                 <NuxtImg class=" border-2 dark:border-[#282828] border-white rounded-full h-[1.8rem] w-[1.8rem] -ms-3" :src="item.author.userAvatarUrl" draggable="false" :alt="item.author.userName" />

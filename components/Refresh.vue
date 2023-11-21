@@ -1,5 +1,5 @@
 <template>
-    <button @click="onrefresh" class="btn-focus outline-none flex items-center justify-between p-3 mt-2 rounded-lg dark:bg-[#141414] bg-[#EBEBEB] me-2" :disabled="disabled" aria-label="refresh">
+    <button @click="onrefresh" class="flex items-center justify-between p-3 mt-2 rounded-lg dark:bg-[#141414] bg-[#EBEBEB] me-2" :disabled="disabled" aria-label="refresh">
         <Icon :class="refreshing || response.status == 401 ? 'animate-spin' : ''"  class="text-black dark:text-white opacity-60" name="ri:refresh-line" size="1.25em"/>
     </button>
 </template>

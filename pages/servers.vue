@@ -3,7 +3,7 @@
     <div class="flex items-center justify-between my-2 me-2">
         <div class="flex items-center">
             <LazyMenu/>
-            <button class=" btn-focus flex items-center justify-between p-3 mt-2 rounded-lg dark:bg-[#141414] bg-[#EBEBEB] me-2" aria-label="refresh" @click="refresh" :disabled="refreshing">
+            <button class="flex items-center justify-between p-3 mt-2 rounded-lg dark:bg-[#141414] bg-[#EBEBEB] me-2" aria-label="refresh" @click="refresh" :disabled="refreshing">
                 <Icon :class="refreshing || statuscode.status == 401 ? 'animate-spin' : ''"  class="text-black dark:text-white opacity-60" name="ri:refresh-line" size="1.25em"/>
             </button>
         </div>
@@ -28,13 +28,14 @@
                                     </select>
                                     <span class=" font-medium text-sm text-[#B92538]">{{ ErrorMessage }}</span>
                                 </div>
-                    
+                                
+                                
                                 <div class="flex gap-3 ">
-                                    <button :disabled="Load" class=" outline-none transition-all btn-focus font-semibold dark:text-white text-black bg-white dark:bg-[#1D1D1D] rounded-xl py-2 px-6" @click="handleUpdate({Value: selected, Server: {id: channelData.GuildId, name: channelData.GuildName }, type: type })">
+                                    <button :disabled="Load" class=" transition-all btn-focus font-semibold dark:text-white text-black bg-white dark:bg-[#1D1D1D] rounded-xl py-2 px-6" @click="handleUpdate({Value: selected, Server: {id: channelData.GuildId, name: channelData.GuildName }, type: type })">
                                         <Icon v-if="Load" class=" animate-spin" name="ri:refresh-line" size="1.25em"/>
                                         <p v-else>Confirm</p>
                                     </button>
-                                    <button class="px-6 py-2 font-bold outline-none focus:ring-1 focus:ring-rose-500 focus:dark:ring-rose-800 rounded-xl text-rose-500 dark:text-rose-800" @click="animate()">Cancel</button>
+                                    <button class="px-6 py-2 font-bold btn-focus rounded-xl text-rose-500 dark:text-rose-800" @click="animate()">Cancel</button>
                                 </div>
                             </div>
                         </div>
@@ -53,7 +54,7 @@
                     <div class=" w-full h-[0.1rem] p-[0.35rem] mb-1 rounded-full dark:opacity-70 opacity-40 dark:bg-neutral-800 bg-[#838383]"></div>
                     <div class=" h-[0.1rem] p-[0.35rem] mb-1 rounded-full dark:opacity-70 opacity-40 dark:bg-neutral-800 bg-[#838383]"></div>
                 </div>
-                <div v-else v-for="(item, index) in showitems" :key="index" tabindex="0" :class="index == CurrentIndex ? ' bg-[#E3E3E3] dark:bg-[#101010]' : ' bg-[#F2F2F2] dark:bg-[#171717] hover:bg-[#E3E3E3] dark:hover:bg-[#101010]'" class=" tab-index transition-all grid items-center justify-center px-[1.48em] p-4 select-none rounded-xl" @keydown.enter="ServerChannel(index)" @click="ServerChannel(index)">
+                <div v-else v-for="(item, index) in showitems" :key="index" :class="index == CurrentIndex ? ' bg-[#E3E3E3] dark:bg-[#101010]' : ' bg-[#F2F2F2] dark:bg-[#171717] hover:bg-[#E3E3E3] dark:hover:bg-[#101010]'" class=" transition-all grid items-center justify-center px-[1.48em] p-4 select-none rounded-xl" @click="ServerChannel(index)">
                     <NuxtImg v-if="item.GuildIcon" class=" border-2 dark:border-[#282828] border-white rounded-full h-[3.5rem] w-[3.5rem] mb-3" :src="item.GuildIcon" draggable="false" :alt="item.GuildName"  />
                     <div v-else class=" flex items-center justify-center rounded-full dark:opacity-90 opacity-40 dark:bg-neutral-800 bg-[#838383] h-[3.5rem] w-[3.5rem] mb-3 "><icon size="2rem" name="tdesign:search-error"></icon></div>
                     <p class=" text-center text-[0.55rem] font-bold dark:text-white text-black">{{ item.GuildName.slice(0, 12) }}</p>
@@ -73,7 +74,7 @@
                 </div>
             </div>
             <div v-else>
-                <div tabindex="0" @keydown.enter="Module(channelData, channelData?.ReviewChannel, true)" @click="Module(channelData, channelData?.ReviewChannel, true)" class=" tab-index flex items-center justify-between p-4 my-2 select-none bg-[#F2F2F2] hover:bg-[#E3E3E3] dark:bg-[#171717] dark:hover:bg-[#101010] rounded-xl">
+                <div @click="Module(channelData, channelData?.ReviewChannel, true)" class=" flex items-center justify-between p-4 my-2 select-none bg-[#F2F2F2] hover:bg-[#E3E3E3] dark:bg-[#171717] dark:hover:bg-[#101010] rounded-xl">
                     <div class="flex ">
                         <div class="text-[#6B8FA3]">
                             <Icon size="1.8em" name="solar:document-add-bold-duotone"></Icon>
@@ -87,7 +88,7 @@
                         <Icon size="1.2em" name="material-symbols:edit-square-outline"></Icon>
                     </div>
                 </div>
-                <div tabindex="0" @keydown.enter="Module(channelData, channelData?.LogChannel, false)" @click="Module(channelData, channelData?.LogChannel, false)" class="tab-index flex items-center justify-between p-4 my-2 select-none bg-[#F2F2F2] hover:bg-[#E3E3E3] dark:bg-[#171717] dark:hover:bg-[#101010] rounded-xl">
+                <div @click="Module(channelData, channelData?.LogChannel, false)" class="flex items-center justify-between p-4 my-2 select-none bg-[#F2F2F2] hover:bg-[#E3E3E3] dark:bg-[#171717] dark:hover:bg-[#101010] rounded-xl">
                     <div class="flex">
                         <div class="text-[#6F6BA3]">
                             <Icon size="1.8em" name="solar:document-add-bold-duotone"></Icon>
