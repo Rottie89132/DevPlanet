@@ -306,5 +306,9 @@ const handleUpdate = async (values) => {
     transform: translateY(12em);
 }
 
+.btn-focus:focus {
+    @apply ring-4 dark:ring-neutral-800 ring-gray-300 outline-none 
+}
+
 
 </style>

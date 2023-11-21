@@ -177,6 +177,11 @@ const deleteCache = () => {
 </script>
 
 <style>
+
+.btn-focus:focus {
+    @apply ring-4 dark:ring-neutral-800 ring-gray-300 outline-none 
+}
+
 .pagination-container {
     @apply flex gap-2 justify-evenly
 }

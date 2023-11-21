@@ -84,3 +84,11 @@ if(response.value.status == 404){
 
 </script>
 
+
+<style scoped>
+
+.btn-focus:focus {
+    @apply ring-4 dark:ring-neutral-800 ring-gray-300 outline-none 
+}
+
+</style>
