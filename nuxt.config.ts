@@ -30,6 +30,8 @@ export default defineNuxtConfig({
     uri: process.env.DataBaseUrl,
   },
   runtimeConfig: {
+    clientid: process.env.clientid,
+    clientsecret: process.env.clientsecret,
     PusherAppID: process.env.PusherAppID,
     PusherAppSecret: process.env.PusherAppSecret,
     PrivateWorkerKey: process.env.VapidPrivate,
@@ -47,6 +49,11 @@ export default defineNuxtConfig({
   },
   nitro: {
     compressPublicAssets: true,
+    imports: {
+      dirs: [
+        "./server/utils/"
+      ],
+    }
   }, 
   colorMode: {
     classSuffix: '', 

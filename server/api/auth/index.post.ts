@@ -25,6 +25,8 @@ export default defineEventHandler(async (event)=> {
     if (UserData.get(email) && (await user.ComparePasswords(password))) {
         const SessionId = crypto.randomUUID()
 
+        await useStorage("Sessions").setItem(SessionId, UserData.get(email))
+
         await $fetch(`/api/users`, {
             method: "POST", body: { Session: SessionId, UserData: UserData.get(email) }
         })

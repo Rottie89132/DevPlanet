@@ -45,64 +45,69 @@
     </div>
 
     <div class="p-1 mx-3 mt-3 text-black dark:text-white">
-        <div class="px-4 py-2 mt-4 dark:bg-[#141414] bg-[#ececec] rounded-xl pb-4">
-            <h1 class="mt-1 mb-3 text-base font-bold opacity-90">Server list</h1>
-            <div v-auto-animate class="flex gap-2 overflow-auto ">
-                <div v-if="refreshing || statuscode.status == 401 || statuscode.status == 404" v-for="data in pageItems" :key="data" class="grid items-center justify-center px-[1.48em] p-4 select-none bg-[#F2F2F2] dark:bg-[#1a1a1a] rounded-xl animate-pulse">
-                    <div class="rounded-full dark:opacity-90 opacity-40 dark:bg-neutral-800 bg-[#838383] h-[3.5rem] w-[3.5rem] mb-3 "></div>
-                    <div class=" w-full h-[0.1rem] p-[0.35rem] mb-1 rounded-full dark:opacity-70 opacity-40 dark:bg-neutral-800 bg-[#838383]"></div>
-                    <div class=" h-[0.1rem] p-[0.35rem] mb-1 rounded-full dark:opacity-70 opacity-40 dark:bg-neutral-800 bg-[#838383]"></div>
-                </div>
-                <div v-else v-for="(item, index) in showitems" :key="index" tabindex="0" :class="index == CurrentIndex ? ' bg-[#E3E3E3] dark:bg-[#101010]' : ' bg-[#F2F2F2] dark:bg-[#171717] hover:bg-[#E3E3E3] dark:hover:bg-[#101010]'" class=" tab-index transition-all grid items-center justify-center px-[1.48em] p-4 select-none rounded-xl" @keydown.enter="ServerChannel(index)" @click="ServerChannel(index)">
-                    <NuxtImg v-if="item.GuildIcon" class=" border-2 dark:border-[#282828] border-white rounded-full h-[3.5rem] w-[3.5rem] mb-3" :src="item.GuildIcon" draggable="false" :alt="item.GuildName"  />
-                    <div v-else class=" flex items-center justify-center rounded-full dark:opacity-90 opacity-40 dark:bg-neutral-800 bg-[#838383] h-[3.5rem] w-[3.5rem] mb-3 "><icon size="2rem" name="tdesign:search-error"></icon></div>
-                    <p class=" text-center text-[0.55rem] font-bold dark:text-white text-black">{{ item.GuildName.slice(0, 12) }}</p>
-                    <p class=" text-center text-[0.4rem] md:text-[0.5em] font-bold dark:text-white text-black opacity-80 mb-[0.60em]">Manage server</p>
-                </div>
-            </div>
-        </div>  
-        <div class=" px-4 py-2 mt-4 dark:bg-[#141414] bg-[#ececec] rounded-xl pb-4">
-            <h1 class="mt-1 mb-3 text-base font-bold opacity-90">Server channels</h1>
-            <div v-if="refreshing || Load || statuscode.status == 401 || statuscode.status == 404" v-for="data in 2" :key="data" class=" pb-[1.29em] flex items-center justify-start p-4 my-2 select-none bg-[#F2F2F2] dark:bg-[#1a1a1a] rounded-xl animate-pulse">
-                <div class="flex ">
-                    <div class="rounded-full dark:opacity-90 opacity-40 dark:bg-neutral-800 bg-[#838383] h-[1.8rem] w-[1.8rem]"></div>
-                </div>
-                <div class="ms-6">
-                    <div class="w-20 h-[0.1rem] p-[0.35rem] mb-1 rounded-full dark:opacity-70 opacity-40 dark:bg-neutral-800 bg-[#838383]"></div>
-                    <div class="w-28 h-[0.1rem] p-[0.35rem] rounded-full dark:opacity-50 opacity-30 dark:bg-neutral-800 bg-[#838383]"></div>
+        <div v-if="Connection?.statusCode != 200">
+            <a  class="relative flex items-center justify-center w-full mb-4 duration-300 ease-in outline-none btn-focus btn-login" href="https://discord.com/api/oauth2/authorize?client_id=974324336552984637&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fservers%2Fauthorize&scope=guilds+identify">Authorize client</a>
+        </div>
+        <div v-else>
+            <div  class="px-4 py-2 mt-4 dark:bg-[#141414] bg-[#ececec] rounded-xl pb-4">
+                <h1 class="mt-1 mb-3 text-base font-bold opacity-90">Server list</h1>
+                <div v-auto-animate class="flex gap-2 overflow-auto ">
+                    <div v-if="refreshing || statuscode.status == 401 || statuscode.status == 404" v-for="data in pageItems" :key="data" class="grid items-center justify-center px-[1.48em] p-4 select-none bg-[#F2F2F2] dark:bg-[#1a1a1a] rounded-xl animate-pulse">
+                        <div class="rounded-full dark:opacity-90 opacity-40 dark:bg-neutral-800 bg-[#838383] h-[3.5rem] w-[3.5rem] mb-3 "></div>
+                        <div class=" w-full h-[0.1rem] p-[0.35rem] mb-1 rounded-full dark:opacity-70 opacity-40 dark:bg-neutral-800 bg-[#838383]"></div>
+                        <div class=" h-[0.1rem] p-[0.35rem] mb-1 rounded-full dark:opacity-70 opacity-40 dark:bg-neutral-800 bg-[#838383]"></div>
+                    </div>
+                    <div v-else v-for="(item, index) in showitems" :key="index" tabindex="0" :class="index == CurrentIndex ? ' bg-[#E3E3E3] dark:bg-[#101010]' : ' bg-[#F2F2F2] dark:bg-[#171717] hover:bg-[#E3E3E3] dark:hover:bg-[#101010]'" class=" tab-index transition-all grid items-center justify-center px-[1.48em] p-4 select-none rounded-xl" @keydown.enter="ServerChannel(index)" @click="ServerChannel(index)">
+                        <NuxtImg v-if="item.GuildIcon" class=" border-2 dark:border-[#282828] border-white rounded-full h-[3.5rem] w-[3.5rem] mb-3" :src="item.GuildIcon" draggable="false" :alt="item.GuildName"  />
+                        <div v-else class=" flex items-center justify-center rounded-full dark:opacity-90 opacity-40 dark:bg-neutral-800 bg-[#838383] h-[3.5rem] w-[3.5rem] mb-3 "><icon size="2rem" name="tdesign:search-error"></icon></div>
+                        <p class=" text-center text-[0.55rem] font-bold dark:text-white text-black">{{ item.GuildName.slice(0, 12) }}</p>
+                        <p class=" text-center text-[0.4rem] md:text-[0.5em] font-bold dark:text-white text-black opacity-80 mb-[0.60em]">Manage server</p>
+                    </div>
                 </div>
             </div>
-            <div v-else>
-                <div tabindex="0" @keydown.enter="Module(channelData, channelData?.ReviewChannel, true)" @click="Module(channelData, channelData?.ReviewChannel, true)" class=" tab-index flex items-center justify-between p-4 my-2 select-none bg-[#F2F2F2] hover:bg-[#E3E3E3] dark:bg-[#171717] dark:hover:bg-[#101010] rounded-xl">
+            <div class=" px-4 py-2 mt-4 dark:bg-[#141414] bg-[#ececec] rounded-xl pb-4">
+                <h1 class="mt-1 mb-3 text-base font-bold opacity-90">Server channels</h1>
+                <div v-if="refreshing || Load || statuscode.status == 401 || statuscode.status == 404" v-for="data in 2" :key="data" class=" pb-[1.29em] flex items-center justify-start p-4 my-2 select-none bg-[#F2F2F2] dark:bg-[#1a1a1a] rounded-xl animate-pulse">
                     <div class="flex ">
-                        <div class="text-[#6B8FA3]">
-                            <Icon size="1.8em" name="solar:document-add-bold-duotone"></Icon>
-                        </div>
-                        <div class="ms-6">
-                            <p class="text-[0.8rem] font-bold dark:text-white text-black">Review channel:</p>  
-                            <p class="text-[0.6rem] font-normal dark:text-white text-black opacity-50"><Icon :class="channelData?.ReviewChannel ? '' : ' opacity-0 absolute'" class=" me-1" size="1.2em" name="ph:hash-bold"></Icon>{{ channelData?.ReviewChannel?.name || "Channel hasn't been asigned yet" }}</p>
-                        </div>
+                        <div class="rounded-full dark:opacity-90 opacity-40 dark:bg-neutral-800 bg-[#838383] h-[1.8rem] w-[1.8rem]"></div>
                     </div>
-                    <div class="-mt-5 opacity-60" >
-                        <Icon size="1.2em" name="material-symbols:edit-square-outline"></Icon>
+                    <div class="ms-6">
+                        <div class="w-20 h-[0.1rem] p-[0.35rem] mb-1 rounded-full dark:opacity-70 opacity-40 dark:bg-neutral-800 bg-[#838383]"></div>
+                        <div class="w-28 h-[0.1rem] p-[0.35rem] rounded-full dark:opacity-50 opacity-30 dark:bg-neutral-800 bg-[#838383]"></div>
                     </div>
                 </div>
-                <div tabindex="0" @keydown.enter="Module(channelData, channelData?.LogChannel, false)" @click="Module(channelData, channelData?.LogChannel, false)" class="tab-index flex items-center justify-between p-4 my-2 select-none bg-[#F2F2F2] hover:bg-[#E3E3E3] dark:bg-[#171717] dark:hover:bg-[#101010] rounded-xl">
-                    <div class="flex">
-                        <div class="text-[#6F6BA3]">
-                            <Icon size="1.8em" name="solar:document-add-bold-duotone"></Icon>
+                <div v-else>
+                    <div tabindex="0" @keydown.enter="Module(channelData, channelData?.ReviewChannel, true)" @click="Module(channelData, channelData?.ReviewChannel, true)" class=" tab-index flex items-center justify-between p-4 my-2 select-none bg-[#F2F2F2] hover:bg-[#E3E3E3] dark:bg-[#171717] dark:hover:bg-[#101010] rounded-xl">
+                        <div class="flex ">
+                            <div class="text-[#6B8FA3]">
+                                <Icon size="1.8em" name="solar:document-add-bold-duotone"></Icon>
+                            </div>
+                            <div class="ms-6">
+                                <p class="text-[0.8rem] font-bold dark:text-white text-black">Review channel:</p>  
+                                <p class="text-[0.6rem] font-normal dark:text-white text-black opacity-50"><Icon :class="channelData?.ReviewChannel ? '' : ' opacity-0 absolute'" class=" me-1" size="1.2em" name="ph:hash-bold"></Icon>{{ channelData?.ReviewChannel?.name || "Channel hasn't been asigned yet" }}</p>
+                            </div>
                         </div>
-                        <div class="ms-6">
-                            <p class=" text-[0.8rem] font-bold dark:text-white text-black">Audit log channel:</p>  
-                            <p class=" text-[0.6rem] font-normal dark:text-white text-black opacity-50"> <Icon :class="channelData?.LogChannel ? '' : ' opacity-0 absolute'" class=" me-1" size="1.2em" name="ph:hash-bold"></Icon>{{ channelData?.LogChannel?.name || "Channel hasn't been asigned yet" }}</p>
+                        <div class="-mt-5 opacity-60" >
+                            <Icon size="1.2em" name="material-symbols:edit-square-outline"></Icon>
                         </div>
                     </div>
-                    <div class="-mt-5 opacity-60">
-                        <Icon size="1.2em" name="material-symbols:edit-square-outline"></Icon>
+                    <div tabindex="0" @keydown.enter="Module(channelData, channelData?.LogChannel, false)" @click="Module(channelData, channelData?.LogChannel, false)" class="tab-index flex items-center justify-between p-4 my-2 select-none bg-[#F2F2F2] hover:bg-[#E3E3E3] dark:bg-[#171717] dark:hover:bg-[#101010] rounded-xl">
+                        <div class="flex">
+                            <div class="text-[#6F6BA3]">
+                                <Icon size="1.8em" name="solar:document-add-bold-duotone"></Icon>
+                            </div>
+                            <div class="ms-6">
+                                <p class=" text-[0.8rem] font-bold dark:text-white text-black">Audit log channel:</p>  
+                                <p class=" text-[0.6rem] font-normal dark:text-white text-black opacity-50"> <Icon :class="channelData?.LogChannel ? '' : ' opacity-0 absolute'" class=" me-1" size="1.2em" name="ph:hash-bold"></Icon>{{ channelData?.LogChannel?.name || "Channel hasn't been asigned yet" }}</p>
+                            </div>
+                        </div>
+                        <div class="-mt-5 opacity-60">
+                            <Icon size="1.2em" name="material-symbols:edit-square-outline"></Icon>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>  
+        </div>
     </div>
 </template>
 
@@ -151,6 +156,7 @@ if (!useRoute().query.index) {
     router.push({ path: '/servers', query: { index: Number(CurrentIndex.value) } })
 }
 
+const { data: Connection } = await useLazyFetch("/api/auth/authorize");
 const { data: response } = await useLazyFetch("/api/feeds/guilds");
 const { data: server } = await useLazyFetch(`/api/feeds/Channels`)
 
