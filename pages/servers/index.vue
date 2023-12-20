@@ -46,7 +46,7 @@
 
     <div class="p-1 mx-3 mt-3 text-black dark:text-white">
         <div v-if="Connection?.statusCode != 200">
-            <a  class="relative flex items-center justify-center w-full mb-4 duration-300 ease-in outline-none btn-focus btn-login" href="https://discord.com/api/oauth2/authorize?client_id=974324336552984637&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fservers%2Fauthorize&scope=guilds+identify">Authorize client</a>
+            <a class="relative flex items-center justify-center w-full mb-4 duration-300 ease-in outline-none btn-focus btn-login" href="https://discord.com/api/oauth2/authorize?client_id=974324336552984637&response_type=code&redirect_uri=https%3A%2F%2Fdevplanet.onrender.com%2Fservers%2Fauthorize&scope=identify+guilds">Authorize client</a>
         </div>
         <div v-else>
             <div  class="px-4 py-2 mt-4 dark:bg-[#141414] bg-[#ececec] rounded-xl pb-4">
