@@ -6,7 +6,7 @@ function TokenAuth(Token: any) {
     params.append('client_secret', config.clientsecret);
     params.append('grant_type', 'authorization_code');
     params.append('code', Token);
-    params.append('redirect_uri', `http://localhost:3000/servers/authorize`);
+    params.append('redirect_uri', `https://devplanet.onrender.com/servers/authorize`);
     params.append('scope', 'identify');
     return params
 }
