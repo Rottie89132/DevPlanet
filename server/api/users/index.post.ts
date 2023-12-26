@@ -45,6 +45,7 @@ export default defineEventHandler(async (event) => {
                     }
 
                     UserSessions.delete(Session);
+                    await useStorage("Sessions").removeItem(Session);
                     PushServer.trigger("Socket", Session, Session);
                 }
             }, 120 * 60 * 1000) 
@@ -53,6 +54,7 @@ export default defineEventHandler(async (event) => {
 
     if(UserSessions.get(ClearSession)) {
         UserSessions.delete(ClearSession);
+        await useStorage("Sessions").removeItem(ClearSession);
         return { Status: 200, message: "The requested resource was deleted" } 
     }
 

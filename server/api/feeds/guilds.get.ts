@@ -21,8 +21,8 @@ export default defineEventHandler(async (event)=> {
                 }
             })
 
-
-            return { status: 200, message: "The requested resource was authorized", server: data, totalitems: data.length }
+            if (data.length == 0) return { status: 404, message: "No valid access token found" }
+                return { status: 200, message: "The requested resource was authorized", server: data, totalitems: data.length }
             
         }
         return { status: 401, message: "Access to the requested resource is unauthorized"}

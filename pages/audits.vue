@@ -7,9 +7,9 @@
                 <Icon :class="refreshing || statuscode.status == 401 ? 'animate-spin' : ''"  class="text-black dark:text-white opacity-60" name="ri:refresh-line" size="1.25em"/>
             </button>
         </div>
-        <button class="btn-focus outline-none flex items-center justify-between p-3 mt-2 rounded-lg dark:bg-[#141414] bg-[#EBEBEB] me-2" aria-label="cache" @click="deleteCache">
+        <!-- <button class="btn-focus outline-none flex items-center justify-between p-3 mt-2 rounded-lg dark:bg-[#141414] bg-[#EBEBEB] me-2" aria-label="cache" @click="deleteCache">
             <Icon  class="text-black dark:text-white opacity-60" name="bi:bug-fill" size="1.25em"/>
-        </button>
+        </button> -->
     </div>
     <div class="p-1 mx-3 mt-3 text-black dark:text-white">
         <div class=" w-full mt-4 dark:bg-[#141414] bg-[#ececec] rounded-xl flex items-center">
