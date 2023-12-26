@@ -28,6 +28,7 @@ export default defineEventHandler(async (event) => {
     }).then(response => response.json());
 
     const Server: Record<string, any> | null = await Servers.find();
+    await ClientServers.deleteMany({ UserID: user.ID });
 
     guildsResponse.forEach(async (guild: any, index: any) => {
         const server = Server.find((server: any) => server.GuildID === guild.id);
