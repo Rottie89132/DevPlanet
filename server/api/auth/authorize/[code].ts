@@ -5,8 +5,8 @@ function TokenAuth(Token: any) {
     params.append('client_id', config.clientid);
     params.append('client_secret', config.clientsecret);
     params.append('grant_type', 'authorization_code');
-    params.append('code', Token);
-    params.append('redirect_uri', `https://devplanet.onrender.com/servers/authorize`);
+    params.append('code', Token); 
+    params.append('redirect_uri', `https://planetaire.onrender.com/servers/authorize`);
     params.append('scope', 'identify');
     return params
 }

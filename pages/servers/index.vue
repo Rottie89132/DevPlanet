@@ -7,7 +7,7 @@
                 <Icon :class="refreshing || statuscode.status == 401 ? 'animate-spin' : ''"  class="text-black dark:text-white opacity-60" name="ri:refresh-line" size="1.25em"/>
             </button>
         </div>
-        <button v-if="Connection?.statusCode == 200" class="btn-focus outline-none flex items-center justify-between p-3 mt-2 rounded-lg dark:bg-[#141414] bg-[#EBEBEB] me-2" aria-label="cache" @click="navigateTo('https://discord.com/api/oauth2/authorize?client_id=974324336552984637&response_type=code&redirect_uri=https%3A%2F%2Fdevplanet.onrender.com%2Fservers%2Fauthorize&scope=identify+guilds', { external: true})">
+        <button v-if="Connection?.statusCode == 200" class="btn-focus outline-none flex items-center justify-between p-3 mt-2 rounded-lg dark:bg-[#141414] bg-[#EBEBEB] me-2" aria-label="cache" @click="navigateTo('https://discord.com/api/oauth2/authorize?client_id=974324336552984637&response_type=code&redirect_uri=https%3A%2F%2Fplanetaire.onrender.com%2Fservers%2Fauthorize&scope=identify+guilds', { external: true})">
             <Icon  class="text-black dark:text-white opacity-60" name="ri:key-2-fill" size="1.25em"/>
         </button>
     </div>
@@ -49,7 +49,7 @@
 
     <div class="p-1 mx-3 mt-3 text-black dark:text-white">
         <div v-if="Connection?.statusCode != 200">
-            <a class="relative flex items-center justify-center w-full mb-4 duration-300 ease-in outline-none btn-focus btn-login" href="https://discord.com/api/oauth2/authorize?client_id=974324336552984637&response_type=code&redirect_uri=https%3A%2F%2Fdevplanet.onrender.com%2Fservers%2Fauthorize&scope=identify+guilds">Authorize client</a>
+            <a class="relative flex items-center justify-center w-full mb-4 duration-300 ease-in outline-none btn-focus btn-login" href="https://discord.com/api/oauth2/authorize?client_id=974324336552984637&response_type=code&redirect_uri=https%3A%2F%2Fplanetaire.onrender.com%2Fservers%2Fauthorize&scope=identify+guilds">Authorize client</a>
         </div>
         <div>
             <div  class="px-4 py-2 mt-4 dark:bg-[#141414] bg-[#ececec] rounded-xl pb-4">
