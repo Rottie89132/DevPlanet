@@ -119,7 +119,7 @@ export default defineNuxtConfig({
         { rel: 'icon', type: 'image/png', href: 'image/rock.png' }
       ],
       charset: 'utf-8',
-      viewport: 'width=device-width, initial-scale=1',
+      viewport: 'viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no',
       }
     }
 })
