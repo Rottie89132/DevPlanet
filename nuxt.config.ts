@@ -35,6 +35,7 @@ export default defineNuxtConfig({
     PusherAppID: process.env.PusherAppID,
     PusherAppSecret: process.env.PusherAppSecret,
     PrivateWorkerKey: process.env.VapidPrivate,
+    ServerUrl: process.env.ServerUrl,
     public: {
       PusherAppKey: process.env.PusherAppKey,
       cluster: process.env.cluster,
