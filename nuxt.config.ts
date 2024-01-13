@@ -50,11 +50,11 @@ export default defineNuxtConfig({
   },
   nitro: {
     compressPublicAssets: true,
-    imports: {
-      dirs: [
-        "./server/utils/"
-      ],
-    }
+    // imports: {
+    //   dirs: [
+    //     "./server/utils/"
+    //   ],
+    // }
   }, 
   colorMode: {
     classSuffix: '', 

@@ -11,10 +11,10 @@ export default defineNitroPlugin(() => {
             res.on('data', () => { console.log(`\x1b[32m✔\x1b[0m Reconnected successfully!`);})
         });
 
-        req.on('error', (error) => {}); 
+        req.on('error', (error) => { console.error(error); }); 
         req.end();
 
-    }).everyMinutes(3);
+    }).everySeconds(10);
 })
 
 
